@@ -33,7 +33,7 @@ public class LoginController {
 //    }
 
     @PostMapping("/login")
-    public String addMessage(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
+    public String login(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
     	 flage = loginService.login(loginForm.getUsername(),loginForm.getPassword());
 //        messageForm.setText("");
     	
