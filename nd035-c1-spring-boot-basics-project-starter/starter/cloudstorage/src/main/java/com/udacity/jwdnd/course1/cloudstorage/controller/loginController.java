@@ -12,6 +12,7 @@ import com.udacity.jwdnd.course1.cloudstorage.utils.URLS;
 
 @Controller
 public class loginController {
+	boolean flage = true ;
 	
     @GetMapping("/login")
     public String getLoginPage() {
@@ -33,12 +34,13 @@ public class loginController {
 
     @PostMapping("/login")
     public String addMessage(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
-    	boolean flage =   loginService.login(loginForm.getUsername(),loginForm.getPassword());
-//        model.addAttribute("greetings", messageListService.getMessages());
+    	 flage = loginService.login(loginForm.getUsername(),loginForm.getPassword());
 //        messageForm.setText("");
     	
-    	if (flage) 
+    	if (flage) {
+            model.addAttribute("flage", flage);
     		return URLS.HOME_END_POINT;
+    		}
     	else 
     		return URLS.LOGIN_END_POINT;
     }

@@ -14,6 +14,7 @@
            
            
             <form action="#" method="POST"   th:object="${loginForm}" th:action="@{'/login'}" >
+<!--                 <div  th:if="${flage}" class="alert alert-danger"> -->
                 <div class="alert alert-danger">
                     Invalid username or password
                 </div>
@@ -34,7 +35,7 @@
             
 
             <div class="form-group" style="margin-top: 0.5em;">
-                <label><a>Click here to sign up</a></label>
+                <label><a href="/signup">Click here to sign up</a></label>
             </div>
         </div>
     </body>
