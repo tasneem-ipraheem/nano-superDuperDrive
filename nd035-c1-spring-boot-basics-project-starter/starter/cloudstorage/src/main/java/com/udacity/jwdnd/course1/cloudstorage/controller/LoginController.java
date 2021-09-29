@@ -42,7 +42,11 @@ public class LoginController {
     		return URLS.HOME_END_POINT;
     		}
     	else 
-    		return URLS.LOGIN_END_POINT;
+
+    		return "redirect:login?fail";
+    	
+		//return URLS.LOGIN_END_POINT;
+
     }
     
 
