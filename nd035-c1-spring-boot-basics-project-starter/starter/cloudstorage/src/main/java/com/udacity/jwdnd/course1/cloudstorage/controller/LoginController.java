@@ -39,13 +39,11 @@ public class LoginController {
     	
     	if (flage) {
             model.addAttribute("flage", flage);
-    		return URLS.HOME_END_POINT;
+    		return "redirect:home";
     		}
     	else 
-
     		return "redirect:login?fail";
     	
-		//return URLS.LOGIN_END_POINT;
 
     }
     
