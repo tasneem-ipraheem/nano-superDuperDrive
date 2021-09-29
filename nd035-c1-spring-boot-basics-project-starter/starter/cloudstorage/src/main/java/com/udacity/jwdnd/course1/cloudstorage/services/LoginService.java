@@ -13,8 +13,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @Service
-public class EncryptionService {
-    private Logger logger = LoggerFactory.getLogger(EncryptionService.class);
+public class LoginService {
+    private Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     public String encryptValue(String data, String key) {
         byte[] encryptedValue = null;
@@ -47,4 +47,11 @@ public class EncryptionService {
 
         return new String(decryptedValue);
     }
+    
+    public boolean login(String username, String password) {
+    	if (username.equals("a")  &&  password.equals("a")) 
+			return true;
+		else return false;
+    }
+    
 }
