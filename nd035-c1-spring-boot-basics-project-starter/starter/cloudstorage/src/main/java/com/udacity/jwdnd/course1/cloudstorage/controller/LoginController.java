@@ -11,7 +11,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.LoginService;
 import com.udacity.jwdnd.course1.cloudstorage.utils.URLS;
 
 @Controller
-public class loginController {
+public class LoginController {
 	boolean flage = true ;
 	
     @GetMapping("/login")
@@ -22,7 +22,7 @@ public class loginController {
     
     private LoginService loginService;
 
-    public loginController(LoginService loginService) {
+    public LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
