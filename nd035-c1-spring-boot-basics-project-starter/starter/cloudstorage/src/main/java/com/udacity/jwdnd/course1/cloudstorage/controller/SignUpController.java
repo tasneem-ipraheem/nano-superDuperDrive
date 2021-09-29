@@ -32,10 +32,11 @@ public class SignUpController {
     	
     	if (flage) {
             model.addAttribute("flage", flage);
-    		return URLS.LOGIN_END_POINT;
+            return "redirect:signup?success";
     		}
     	else 
-    		return URLS.SIGNUP_END_POINT;
+    		return "redirect:signup?fail";
+
     }
     
 }
