@@ -15,11 +15,14 @@
            
             <form action="#" method="POST"   th:object="${loginForm}" th:action="@{'/login'}" >
 
-                <div th:if="${param.fail}" class="alert alert-danger">
+                <div id="error-msg" th:if="${param.error}" class="alert alert-danger">
                 
                     Invalid username or password
                 </div>
-                <div th:if="${param.logedout}" class="alert alert-dark">
+                
+                    <div th:if="${param.logout}" class="alert alert-dark">
+                
+<!--                 <div id="logout-msg" th:if="${param.logout}" class="alert alert-dark"> -->
                     You have been logged out
                 </div>
                 <div class="form-group">

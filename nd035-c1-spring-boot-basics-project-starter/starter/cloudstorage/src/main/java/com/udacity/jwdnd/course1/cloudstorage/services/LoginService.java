@@ -47,11 +47,11 @@ public class LoginService {
 
         return new String(decryptedValue);
     }
-    
-    public boolean login(String username, String password) {
-    	if (username.equals("a")  &&  password.equals("a")) 
-			return true;
-		else return false;
-    }
+//    
+//    public boolean login(String username, String password) {
+//    	if (username.equals("a")  &&  password.equals("a")) 
+//			return true;
+//		else return false;
+//    }
     
 }
