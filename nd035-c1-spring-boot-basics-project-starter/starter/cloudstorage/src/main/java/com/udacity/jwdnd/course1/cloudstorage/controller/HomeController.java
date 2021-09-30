@@ -21,55 +21,5 @@ public class HomeController {
     public String getLoginPage() {
         return URLS.HOME_END_POINT;
     }
-    
-//    @GetMapping("/logout")
-//    public String logoutView(){
-//        return "redirect:/login?logout";
-//    }
-    
-  //////////////////////////////////////////////////////////////////  
-//    
-//    @PostMapping("/logout")
-//    public String logout() {
-////    	flage = homeService.logout(homeForm.getUsername(),homeForm.getPassword());
-//    	flage = homeService.logout();
-//    	if (flage) {
-//            return "redirect:login?logedout";
-//    		}
-//    	else 
-//    		return "home";
-//
-//    }
-    
-//
-//    @PostMapping("/logout")
-//    public String logout(Model model) {
-//
-////    	flage = homeService.logout(homeForm.getUsername(),homeForm.getPassword());
-//    	flage = homeService.logout();
-//    	if (flage) {
-//    		
-//            model.addAttribute("logout", true);
-//
-//            return "redirect:login?logout";
-//            
-//    		}
-//    	else 
-//    		return "home";
-//
-//    }
-    
-//    @PostMapping("/addNote")
-//    public String logout() {
-////    	flage = homeService.logout(homeForm.getUsername(),homeForm.getPassword());
-//    	flage = homeService.logout();
-//    	if (flage) {
-//            return "redirect:login?logedout";
-//    		}
-//    	else 
-//    		return "home";
-//
-//    }
-    
-    
+   
 }
