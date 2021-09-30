@@ -37,16 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .defaultSuccessUrl("/home", true);
         
+    // Defult spring logout
    //     http.logout()
    //     .invalidateHttpSession(true)
    //     .clearAuthentication(true)
    //     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-   //     .logoutSuccessUrl("/login?logout=true");
+   //     .logoutSuccessUrl("/login?logout");
         
-        
-//        http.logout()
-//        .logoutSuccessUrl("/login?logout")
-//        .permitAll();
     }
   
 
