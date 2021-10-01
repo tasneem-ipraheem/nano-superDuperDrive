@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
+import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
 
 @Controller
@@ -18,7 +18,9 @@ public class NotesController {
     }
     
     @PostMapping("/notes")
-    public String createNote(Authentication authentication, @ModelAttribute NoteForm noteForm, Model model) {
+//    public String createNote(Authentication authentication, @ModelAttribute NoteForm noteForm, Model model) {
+    public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model) {
+
     	System.out.println("*****	NotesController : createNote  ******");
 
 //    	User currentUser = (User) authentication.getPrincipal();
@@ -26,7 +28,7 @@ public class NotesController {
 //    	 noteForm.setUserId(id);
     	
     	System.out.println("*****	NotesController : createNote  ******");
-		System.out.println("noteForm = " +noteForm.getNoteTitle() +" : "+ noteForm.getNoteDescription() );
+		System.out.println("noteForm = " +notes.getNoteTitle() +" : "+ notes.getNoteDescription() );
       
     	 
     	 

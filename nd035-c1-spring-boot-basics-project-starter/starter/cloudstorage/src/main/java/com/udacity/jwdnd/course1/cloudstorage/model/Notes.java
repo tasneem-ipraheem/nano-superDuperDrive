@@ -3,8 +3,8 @@ package com.udacity.jwdnd.course1.cloudstorage.model;
 public class Notes {
 	
 	private Integer noteId;
-	private String noteTitle;
-	private String noteDescription;
+	private String noteTitle;//noteTitle
+	private String noteDescription;//noteDescription
 	private Integer userId;
 	
 	public Integer getNoteId() {
