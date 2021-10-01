@@ -60,8 +60,12 @@
                             </table>
                         </div>
                     </div>
+                    
+                    
+<!--  *******************************  Note   *******************************  -->
+                    
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button  style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
@@ -97,27 +101,48 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" method="POST">
-                                            <input type="hidden" name="noteId" id="note-id">
-                                            <div class="form-group">
-                                                <label for="note-title" class="col-form-label">Title</label>
-                                                <input type="text" name= "noteTitle" class="form-control" id="note-title" maxlength="20" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="note-description" class="col-form-label">Description</label>
-                                                <textarea class="form-control" name="noteDescription" id="note-description" rows="5" maxlength="1000" required></textarea>
-                                            </div>
-                                            <button id="noteSubmit" type="submit" class="d-none"></button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    
+                                    
+		<!--  *******************************  Add Note   *******************************  -->
+                  <form action="#" method="POST"  th:object="${noteform}"  th:action="@{'/notes'}" >
+                      <input type="hidden" name="noteId" id="note-id">
+                      
+<!--                        th:field="*{noteTitle}"  -->
+<!--                        th:field="*{noteDescription}"  -->
+<!--                        th:object="${noteform}"  -->
+                       
+                      <div class="form-group">
+                          <label for="note-title"  class="col-form-label">Title</label>
+                          <input type="text" name= "noteTitle" 
+                          class="form-control" id="note-title" maxlength="20" required>
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="note-description" class="col-form-label">Description</label>
+                          <textarea class="form-control"  name="noteDescription"
+                           id="note-description" rows="5" maxlength="1000" required></textarea>
+                      </div>
+                      
+                      <button id="noteSubmit" type="submit" class="d-none"></button>
+                      
+                  </form>
+                  
+   
+                              
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+                    
+               <!--  ********************************************************************************************************************************************  -->
+                    
+                    
+                    
                     <div class="tab-pane fade" id="nav-credentials" role="tabpanel" aria-labelledby="nav-credentials-tab">
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showCredentialModal()">
                             + Add a New Credential
