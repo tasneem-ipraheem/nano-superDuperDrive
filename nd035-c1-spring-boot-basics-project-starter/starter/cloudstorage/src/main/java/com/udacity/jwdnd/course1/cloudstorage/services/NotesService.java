@@ -22,18 +22,8 @@ public class NotesService {
     }
 
 
-	public void addNote(Notes note) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("*****	NotesService : addNote  ******");
-//		Notes note = new Notes();
-//		
-//		note.setNoteDescription("ddd");
-//		note.setNoteTitle("ttttt");
-//		note.setUserId(1);
-		
-		noteMapper.insertNote(note);
-		
+	public int addNote(Notes note) {
+		return noteMapper.insertNote(note);
 	}
 	
 	

@@ -5,113 +5,46 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
+import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 
 @Controller
 public class NotesController {
-    private NotesService notesService;
+	private NotesService notesService;
+	private UserService userService;
 
-    public NotesController( NotesService noteshomeService) {
-        this.notesService = noteshomeService;
-    }
-    
-    @PostMapping("/notes")
-//    public String createNote(Authentication authentication, @ModelAttribute NoteForm noteForm, Model model) {
-    public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model) {
+	public NotesController(NotesService noteshomeService, UserService userService) {
+		this.notesService = noteshomeService;
+		this.userService = userService;
+	}
 
-    	System.out.println("*****	NotesController : createNote  ******");
+	@PostMapping("/notes")
+	public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model,RedirectAttributes redirectAttributes) {
 
-//    	User currentUser = (User) authentication.getPrincipal();
-//    	int id = currentUser.getUserId();
-//    	 noteForm.setUserId(id);
-    	
-    	System.out.println("*****	NotesController : createNote  ******");
-		System.out.println("noteForm = " +notes.getNoteTitle() +" : "+ notes.getNoteDescription() );
-      
-    	 
-    	 
-    	 
-    	 
-    	 
-//         model.addAttribute("notelist", this.messageService.getChatMessages());
-    	  return "redirect:/home";
-    	
-    	
-//    	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+		User user = userService.getUser(authentication.getName());
+		Integer userId = user.getUserId();
+		notes.setUserId(userId);
 
-//    	String userName = authentication.getPrincipal().;
-
-
-    }
-    
-//    
-//    @PostMapping("/notes")
-//    public String createNote(@ModelAttribute("noteForm") NoteForm noteForm) {
-//    	System.out.println("*****	NotesController : createNote  ******");
-//		System.out.println("noteForm = " +noteForm.getNoteTitle() +" : "+ noteForm.getNoteDescription() );
-//        return "home";
-//    }
-    
-    
-//
-//  @GetMapping("/notes")
-//  public String loginView() {
-//      return "notes";
-//  }
-    
-    /*
-   
-    @PostMapping("/notes")
-    public String createNote(Authentication authentication, Model model) {
-		System.out.println("*****	NotesController : createNote  ******");
-
+//		System.out.println("*****	NotesController : createNote  ******");
+//		System.out.println("noteForm = " + notes.getNoteTitle() + " : " + notes.getNoteDescription() +" , user : "+notes.getUserId());
 		
-		this.notesService.addNote(null);
-//		 noteForm.setNoteDiscription("");
-//		 noteForm.setNoteTitle("");
-    	 
-//         model.addAttribute("notelist", this.messageService.getChatMessages());
-         return "home";
-    	
-    	
-//    	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-    
-//    	String userName = authentication.getPrincipal().;
-    
-    
-    }
-    */
-   
-}
+		 int rowsAdded = this.notesService.addNote(notes); 
+		 
+		 if (rowsAdded >= 0){
+	            redirectAttributes.addFlashAttribute("success",true);
+	            redirectAttributes.addFlashAttribute("successMessage", "You successfully added a new note");
+	        } else {
+	            redirectAttributes.addFlashAttribute("error", true);
+	            redirectAttributes.addFlashAttribute("errorMessage","There was an error for adding a note. Please try again");
+	        }
 
-/*
-@PostMapping("/notes")
-public String createNote(Authentication authentication, @ModelAttribute("noteForm") NoteForm noteForm, Model model) {
-	System.out.println("*****	NotesController : createNote  ******");
+		 
+		return "redirect:/home";
 
-//	User currentUser = (User) authentication.getPrincipal();
-//	int id = currentUser.getUserId();
-//	 noteForm.setUserId(id);
-	
-	
-	 this.notesService.addNote(noteForm);
-	 noteForm.setNoteDiscription("");
-	 noteForm.setNoteTitle("");
-	 
-	 
-	 
-	 
-	 
-//     model.addAttribute("notelist", this.messageService.getChatMessages());
-     return "home";
-	
-	
-//	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
-
-//	String userName = authentication.getPrincipal().;
-
+	}
 
 }
-*/
