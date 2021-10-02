@@ -14,7 +14,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 @Mapper
 public interface CredentialMapper {
     @Select("SELECT * FROM CREDENTIALS WHERE userId = #{userId}")
-    List<Credential> getCredentials(Integer userId);
+    List<Credential> getCredentialsByUserId(Integer userId);
 
     @Insert("INSERT INTO CREDENTIALS (url, username,key,password, userId) VALUES(#{url},#{username},#{key}, #{password}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "credentialId")

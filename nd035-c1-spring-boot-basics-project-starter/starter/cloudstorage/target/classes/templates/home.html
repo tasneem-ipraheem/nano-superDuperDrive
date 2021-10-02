@@ -270,15 +270,15 @@
 									<th style="width: 25%" scope="col">Password</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody th:each="credential:${credentialList}">
 								<tr>
 									<td>
 										<button type="button" class="btn btn-success">Edit</button> <a
 										class="btn btn-danger">Delete</a>
 									</td>
-									<th scope="row">Example Credential URL</th>
-									<td>Example Credential Username</td>
-									<td>Example Credential Password</td>
+									<th th:text="${credential.getUrl()}" scope="row">Example Credential URL</th>
+									<td th:text="${credential.getUsername()}"  >Example Credential Username</td>
+									<td  th:text="${credential.getPassword()}" >Example Credential Password</td>
 								</tr>
 							</tbody>
 						</table>
