@@ -46,6 +46,9 @@ public class HomeController {
 		
 		List<Credential> credentialList =  credentialService.getCredentials(user.getUserId());
 		model.addAttribute("credentialList", credentialList);
+		
+		
+		 model.addAttribute("encryptionService",encryptionService);
 
 		return "home";
 	}

@@ -88,7 +88,7 @@ public class CredentialController {
         return "redirect:/home";
     }*/
 
-    
+    /*
     @PutMapping
     public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
         User user = userService.getUser(authentication.getName());
@@ -110,7 +110,32 @@ public class CredentialController {
 //        }
 
         return "redirect:/home";
+    }*/
+    
+    
+    @PutMapping
+    public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserId();
+        credential.setUserId(userId);
+//        System.out.println(model.getAttribute("credential-password"));
+        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
+        credential.setPassword(encryptedPassword);
+        int rowsUpdated = credentialService.updateCredential(credential);
+        
+        
+        if (rowsUpdated > 0){
+            redirectAttributes.addFlashAttribute("success",true);
+            redirectAttributes.addFlashAttribute("successMessage", "You successfully updated a credential");
+        } else {
+            redirectAttributes.addFlashAttribute("error", true);
+            redirectAttributes.addFlashAttribute("errorMessage","There was an error for updating a credential. Please try again");
+        }
+
+        return "redirect:/home";
     }
+    
+    
     @DeleteMapping
     public String deleteCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
         User user = userService.getUser(authentication.getName());

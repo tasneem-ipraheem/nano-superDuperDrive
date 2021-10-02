@@ -34,6 +34,12 @@ public class CredentialService {
 	public List<Credential> getCredentials(Integer userId) {
 		return credentialMapper.getCredentialsByUserId(userId);
 	}
+
+
+
+	public int updateCredential(Credential credential) {
+		 return credentialMapper.updateCredential(credential);
+	}
 	
 
 }
