@@ -93,6 +93,9 @@ public class CredentialController {
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
         credential.setUserId(userId);
+        
+        System.out.println(" *********** delete *********");
+        
 //        int rowsUpdated = credentialService.deleteCredential(credential.getCredentialId());
 //        if (rowsUpdated < 0){
 //            this.errorMessage = "There was an error for deleting a credential. Please try again";
