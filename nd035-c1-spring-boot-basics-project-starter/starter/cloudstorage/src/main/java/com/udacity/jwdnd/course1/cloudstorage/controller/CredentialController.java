@@ -66,7 +66,7 @@ public class CredentialController {
         return "redirect:/home";
     }
 
-    @PutMapping
+   /* @PutMapping
     public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
@@ -86,27 +86,45 @@ public class CredentialController {
 //        }
 
         return "redirect:/home";
-    }
+    }*/
 
+    
+    @PutMapping
+    public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
+        User user = userService.getUser(authentication.getName());
+        Integer userId = user.getUserId();
+        credential.setUserId(userId);
+//        System.out.println(model.getAttribute("credential-password"));
+        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
+        credential.setPassword(encryptedPassword);
+//        int rowsUpdated = credentialService.updateCredential(credential);
+//        if (rowsUpdated < 0){
+//            this.errorMessage = "There was an error for updating a credential. Please try again";
+//        }
+//        if (this.ifError == null) {
+//            redirectAttributes.addFlashAttribute("ifSuccess",true);
+//            redirectAttributes.addFlashAttribute("successMessage", "You successfully updated a credential");
+//        } else {
+//            redirectAttributes.addFlashAttribute("ifError", true);
+//            redirectAttributes.addFlashAttribute("errorMessage",this.errorMessage);
+//        }
+
+        return "redirect:/home";
+    }
     @DeleteMapping
     public String deleteCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
         credential.setUserId(userId);
         
-        System.out.println(" *********** delete *********");
-        
-//        int rowsUpdated = credentialService.deleteCredential(credential.getCredentialId());
-//        if (rowsUpdated < 0){
-//            this.errorMessage = "There was an error for deleting a credential. Please try again";
-//        }
-//        if (this.ifError == null) {
-//            redirectAttributes.addFlashAttribute("ifSuccess",true);
-//            redirectAttributes.addFlashAttribute("successMessage", "You successfully deleted a credential");
-//        } else {
-//            redirectAttributes.addFlashAttribute("ifError", true);
-//            redirectAttributes.addFlashAttribute("errorMessage",this.errorMessage);
-//        }
+        int rowsUpdated = credentialService.deleteCredential(credential.getCredentialId());
+        if (rowsUpdated > 0) {
+            redirectAttributes.addFlashAttribute("success",true);
+            redirectAttributes.addFlashAttribute("successMessage", "You successfully deleted a credential");
+        } else {
+            redirectAttributes.addFlashAttribute("error", true);
+            redirectAttributes.addFlashAttribute("errorMessage","There was an error for deleting a credential. Please try again");
+        }
 
         return "redirect:/home";
 
