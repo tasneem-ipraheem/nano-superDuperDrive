@@ -48,5 +48,10 @@ public class FilesService {
         return ((this.filesMapper.getFile(files) == null) ? false : true);
 
 	}
+	
+	   public int deleteFile(Integer fileId) {
+	       System.out.println(fileId);
+	        return filesMapper.delete(fileId);
+	   }
 
 }

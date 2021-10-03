@@ -2,6 +2,8 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,5 +59,19 @@ public class FilesController {
 		}
 		return "redirect:/home";
 	}
+	
+    @GetMapping("/deleteFile/{id}")
+    public String deleteFile(@PathVariable("id") Integer id,RedirectAttributes redirectAttributes ) {
+
+        try {
+            filesService.deleteFile(id);
+            redirectAttributes.addFlashAttribute("success", true);
+            redirectAttributes.addFlashAttribute("successMessage", "file Deleted");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", true);
+            redirectAttributes.addFlashAttribute("errorMessage", "System error!" + e.getMessage());
+        }
+        return "redirect:/home";
+    }
 
 }
