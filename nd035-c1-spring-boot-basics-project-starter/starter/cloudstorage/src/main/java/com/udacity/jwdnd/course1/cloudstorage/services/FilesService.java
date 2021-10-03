@@ -54,4 +54,11 @@ public class FilesService {
 	        return filesMapper.delete(fileId);
 	   }
 
+	public Files getFileById(Integer fileId) {
+//		Files files = new Files();
+//		files.setFileId(fileId);
+        return this.filesMapper.getFileById(fileId);
+
+	}
+
 }

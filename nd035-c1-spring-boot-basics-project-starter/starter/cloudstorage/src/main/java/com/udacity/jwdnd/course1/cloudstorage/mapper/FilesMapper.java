@@ -23,6 +23,11 @@ public interface FilesMapper {
     
     @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
     int delete(Integer fileId);
+
+    @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
+	public Files getFileById(Integer fileId);
+    
+    
 	
 //    private Integer fileId;
 //    private Integer userid;

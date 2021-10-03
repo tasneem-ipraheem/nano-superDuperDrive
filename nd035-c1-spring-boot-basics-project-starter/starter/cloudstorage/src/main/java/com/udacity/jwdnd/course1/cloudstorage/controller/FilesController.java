@@ -1,5 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FilesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -72,6 +77,21 @@ public class FilesController {
             redirectAttributes.addFlashAttribute("errorMessage", "System error!" + e.getMessage());
         }
         return "redirect:/home";
+    }
+    
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId) {
+        Files files = filesService.getFileById(fileId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + files.getFilename());
+        httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
+        httpHeaders.add("Pragma", "no-cache");
+        httpHeaders.add("Expires", "0");
+        ByteArrayResource resource = new ByteArrayResource(files.getFiledata());
+        return ResponseEntity.ok()
+                .headers(httpHeaders)
+                .body(resource);
+
     }
 
 }
