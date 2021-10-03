@@ -76,6 +76,12 @@
 				<td>
 					<a th:href="@{'/files/download/' + ${files.fileId}}" target="_blank" class="btn btn-success">View</a>
 					<a class="btn btn-danger" th:href="@{/files/deleteFile/{id}(id=${files.fileId})}">Delete</a>
+
+<!-- 					<a class="btn btn-danger"  -->
+<!-- 					th:file-id="${files.getFileId()}" -->
+<!-- 					onclick="showDeleteFileModal(this.getAttribute('file-id'))" -->
+<!-- 					>Delete</a> -->
+
 				</td>
 				<th scope="row" th:text="${files.getFilename()}">ExampleFile.txt</th>
 			</tr>
@@ -83,6 +89,35 @@
 		</table>
 	</div>
 </div>
+
+		<!-- **********************		delete File	Form *****************************************  -->
+
+				<div class="modal fade" id="deleteFileModal" tabindex="-1"  th:object="${files}"
+					role="dialog" aria-labelledby="deleteFileModal" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="deleteFileModal-header">Delete
+									File</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+									Are you sure you want to delete this item?' 
+									<input	type="hidden" name="fileId"  id="delete-file-id">
+<!-- 														<a class="btn btn-danger" th:href="@{/files/deleteFile/{id}(id=${fileId})}">Delete</a> -->
+									<a class="btn btn-danger" th:href="@{/files/deleteFile/${fileId}}" >Delete</a>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
 
 <!--  ********************************************************************************************************************************************  -->
 <!--  *******************************  Notes   *******************************  -->
@@ -484,8 +519,6 @@
 		
 		
         function showEditCredentialModal(credentialId, key,url, username, password){
-            console.log('i m in creds')
-            console.log(key)
             $('#edit-credential-id').val(credentialId ? credentialId : '');
             $('#edit-credential-key').val(key ? key : '');
             $('#edit-credential-url').val(url ? url : '');
@@ -494,7 +527,13 @@
             $('#editCredentialModal').modal('show');
         }
         
-        
+		// For deleting the file modal
+		function showDeleteFileModal(fileId) {
+            console.log(fileId)
+			$('#delete-file-id').val(fileId ? fileId : '');
+			$('#deleteFileModal').modal('show');
+		}
+		
 	</script>
 </body>
 </html>
