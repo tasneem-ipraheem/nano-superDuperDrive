@@ -1,11 +1,18 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 //TODO [Junit - Read resources]
 /**
@@ -28,14 +35,12 @@ class CloudStorageApplicationTests {
 	public int port;
 
 	public static WebDriver driver;
-
 	public String baseURL;
 
 	@BeforeAll
 	public static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-
+//		new WebDriverWait(driver, 1000);
 	}
 
 	@AfterAll
@@ -46,28 +51,69 @@ class CloudStorageApplicationTests {
 
 	@BeforeEach
 	public void beforeEach() {
-		baseURL = baseURL = "http://localhost:" + port;
-	}
-
-	@Test
-	public void testUserSignupLoginAndSubmitMessage() {
-		String username = "pzastoup";
-		String password = "whatabadpassword";
-
-
-		driver.get(baseURL + "/signup");
-
-		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup("Peter", "Zastoupil", username, password);
-
-		driver.get(baseURL + "/login");
-
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(username, password);
-
+		baseURL = "http://localhost:" + port;
+		driver = new ChromeDriver();
 
 	}
-
 	
+	@AfterEach
+	public void afterEach() {
+		if (driver != null) {
+			driver.quit();
+		}
+	}
+	String username = "testn";
+	String password = "testp";
+	
+	// Perform signup process
+		public void signup() {
 
+			driver.get(this.baseURL + "/signup");
+			SignupPage signupPage = new SignupPage(driver);
+			signupPage.signup("testn", "testp",this.username, this.password);
+		}
+
+		//Perform login process
+		public void login(){
+			driver.get(this.baseURL + "/login");
+			LoginPage loginPage = new LoginPage(driver);
+			loginPage.login(this.username, this.password);
+
+		}
+
+
+		@Test
+		public void getSignupPage() {
+			driver.get(this.baseURL + "/signup");
+			Assertions.assertEquals("Sign Up", driver.getTitle());
+		}
+
+		@Test
+		public void getLoginPage() {
+			driver.get(this.baseURL + "/login");
+			Assertions.assertEquals("Login", driver.getTitle());
+		}
+
+
+
+		@Test
+		public void testUserSignupLoginPage() {
+			signup();
+			login();
+			driver.get(this.baseURL + "/login?logout");
+			Assertions.assertEquals("You have been logged out", driver.findElement(By.id("logout-msg")).getText());
+
+		}
+
+
+		@Test
+		public void createNoteTest() {
+			signup();
+			login();
+			driver.get(this.baseURL + "/home");
+			
+			NotesPage notesPage = new NotesPage(driver);
+			notesPage.addNote("Note title", "Note description");
+			Assertions.assertEquals("You successfully added a new note", driver.findElement(By.id("success-msg")).getText());
+		
 }
