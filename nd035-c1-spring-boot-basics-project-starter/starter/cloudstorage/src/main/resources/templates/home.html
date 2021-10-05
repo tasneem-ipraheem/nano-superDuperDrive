@@ -109,11 +109,13 @@
 									<input	type="hidden" name="fileId"  id="delete-file-id">
 <!-- 														<a class="btn btn-danger" th:href="@{/files/deleteFile/{id}(id=${fileId})}">Delete</a> -->
 									<a class="btn btn-danger" th:href="@{/files/deleteFile/${fileId}}" >Delete</a>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
+									<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Close</button>
 							</div>
+<!-- 							<div class="modal-footer"> -->
+<!-- 								<button type="button" class="btn btn-secondary" -->
+<!-- 									data-dismiss="modal">Close</button> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -422,13 +424,18 @@
 										type="hidden" name="credentialId" id="delete-credential-id">
 									<button type="submit" id="deleteCredentialSubmit"
 										class="btn btn-primary">Delete</button>
-								</form>
-
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
+										
+										<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Close</button>
-							</div>
+								</form>
+								
+								
+
+<!-- 							</div> -->
+<!-- 							<div class="modal-footer"> -->
+<!-- 								<button type="button" class="btn btn-secondary" -->
+<!-- 									data-dismiss="modal">Close</button> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
