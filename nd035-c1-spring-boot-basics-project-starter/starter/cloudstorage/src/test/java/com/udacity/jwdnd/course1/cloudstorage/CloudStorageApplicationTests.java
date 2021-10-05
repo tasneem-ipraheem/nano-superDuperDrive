@@ -66,7 +66,6 @@ class CloudStorageApplicationTests {
 	String username = "testName";
 	String password = "testPswrd";
 
-	// Perform signup process
 	public void signup() {
 
 		driver.get(this.baseURL + "/signup");
@@ -74,7 +73,6 @@ class CloudStorageApplicationTests {
 		signupPage.signup("testName", "testPswrd", this.username, this.password);
 	}
 
-	// Perform login process
 	public void login() {
 		driver.get(this.baseURL + "/login");
 		LoginPage loginPage = new LoginPage(driver);
@@ -82,6 +80,7 @@ class CloudStorageApplicationTests {
 
 	}
 
+	/**************** Login/signup ********************/
 
 	@Test
 	public void getSignupPage() {
