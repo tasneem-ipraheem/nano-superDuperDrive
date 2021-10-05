@@ -100,7 +100,11 @@ class CloudStorageApplicationTests {
 		driver.get(this.baseURL + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
-
+	@Test
+	public void testRandomPage() {
+		driver.get(this.baseURL + "/dummy");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
 
 	@Test
 	public void testUserSignupLoginLogOut() {
@@ -196,7 +200,6 @@ class CloudStorageApplicationTests {
 	}
 	
 	
-	/*************		Credential  	*******************/
 	@Test
 	public void createCredentialTest() {
 		signup();
@@ -249,6 +252,7 @@ class CloudStorageApplicationTests {
 		credentialsPage.openCredentialTabJS();
 		Assertions.assertEquals(false, credentialsPage.hasCredentials());
 	}
+	
 	
 
 }
