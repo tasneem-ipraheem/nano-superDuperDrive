@@ -15,7 +15,7 @@
 	<div class="container">
 		<div id="logoutDiv">
 			<form action="#" method="POST" th:action="@{'/logout'}">
-				<button type="submit" class="btn btn-secondary float-right">Logout</button>
+				<button type="submit" id="logout-btn-id" class="btn btn-secondary float-right">Logout</button>
 			</form>
 		</div>
 		<div id="contentDiv" style="clear: right;">
@@ -125,7 +125,7 @@
 
 				<div class="tab-pane fade" id="nav-notes" role="tabpanel"
 					aria-labelledby="nav-notes-tab">
-					<button style="margin: 0.25em;" type="button"
+					<button style="margin: 0.25em;" type="button" id="add-note-button"
 						class="btn btn-info float-right" onclick="showNoteModal()">
 						+ Add a New Note</button>
 
@@ -141,7 +141,7 @@
 							<tbody th:each="notes:${noteList}">
 								<tr>
 									<td>
-										<button type="button" class="btn btn-success"
+										<button type="button" class="btn btn-success" id="edit-note-button"
 											th:note-title="${notes.getNoteTitle()}"
 											th:note-id="${notes.getNoteId()}"
 											th:note-description="${notes.getNoteDescription()}"
@@ -149,12 +149,12 @@
 													 this.getAttribute('note-title'),  
 													 this.getAttribute('note-description'))">Edit</button>
 
-										<a class="btn btn-danger" th:note-id="${notes.getNoteId()}"
+										<a class="btn btn-danger" th:note-id="${notes.getNoteId()}" id="delete-note-button"
 										onclick="showDeleteNoteModal(this.getAttribute('note-id'))">Delete</a>
 									</td>
-									<th scope="row" th:text="${notes.getNoteTitle()}">Example
+									<th scope="row" th:text="${notes.getNoteTitle()}" id="title-col">Example
 										Note Title</th>
-									<td th:text="${notes.getNoteDescription()}">Example Note
+									<td th:text="${notes.getNoteDescription()}" id="title-desc">Example Note
 										Description</td>
 
 								</tr>
@@ -277,14 +277,20 @@
 								<form action="#" th:action="@{/notes}" th:method="DELETE">
 									Are you sure you want to delete this item?' <input
 										type="hidden" name="noteId" id="delete-note-id">
-									<button type="submit" id="deleteNoteSubmit"
-										class="btn btn-primary">Delete</button>
+									<div>
+									
+										<button type="submit" id="deleteNoteSubmit"
+											class="btn btn-primary">Delete</button>
+										
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Close</button>
+									</div>
 								</form>
 
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Close</button>
+<!-- 							</div> -->
+<!-- 							<div class="modal-footer"> -->
+<!-- 								<button type="button" class="btn btn-secondary" -->
+<!-- 									data-dismiss="modal">Close</button> -->
 							</div>
 						</div>
 					</div>

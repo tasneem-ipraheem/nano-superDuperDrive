@@ -60,6 +60,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
+<!--       For junit test   -->
+        
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
@@ -89,6 +92,9 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+<!-- 		. -->
+		
 	</dependencies>
 
     <build>

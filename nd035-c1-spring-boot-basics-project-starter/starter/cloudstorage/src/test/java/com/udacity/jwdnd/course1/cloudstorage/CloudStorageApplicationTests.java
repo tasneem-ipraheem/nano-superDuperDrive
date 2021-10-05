@@ -63,15 +63,15 @@ class CloudStorageApplicationTests {
 		}
 	}
 
-	String username = "testn";
-	String password = "testp";
+	String username = "Tasneem";
+	String password = "admin";
 
 	// Perform signup process
 	public void signup() {
 
 		driver.get(this.baseURL + "/signup");
 		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup("testn", "testp", this.username, this.password);
+		signupPage.signup("Tasneem", "admin", this.username, this.password);
 	}
 
 	// Perform login process
@@ -82,6 +82,7 @@ class CloudStorageApplicationTests {
 
 	}
 
+	
 	@Test
 	public void getSignupPage() {
 		driver.get(this.baseURL + "/signup");
@@ -93,6 +94,19 @@ class CloudStorageApplicationTests {
 		driver.get(this.baseURL + "/login");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
+	
+	@Test
+	public void getHomePage() {
+		driver.get(this.baseURL + "/home");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
+	@Test
+	public void testRandomPage() {
+		driver.get(this.baseURL + "/dummy");
+		Assertions.assertEquals("Login", driver.getTitle());
+	}
+
 
 	@Test
 	public void testUserSignupLoginPage() {
@@ -111,8 +125,70 @@ class CloudStorageApplicationTests {
 
 		NotesPage notesPage = new NotesPage(driver);
 		notesPage.addNote("Note title", "Note description");
+		
 		Assertions.assertEquals("You successfully added a new note",
 				driver.findElement(By.id("success-msg")).getText());
+		
+		driver.get(this.baseURL + "/home");
+		notesPage.openNoteTabJS();
+		Assertions.assertEquals("Note title",  driver.findElement(By.id("title-col")).getAttribute("innerHTML"));
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		notesPage.openNoteTabJS();
+		notesPage.deleteNote();
+
+	}	
+	
+	
+
+	
+	@Test
+	public void editNoteTest() {
+		signup();
+		login();
+		driver.get(this.baseURL + "/home");
+		NotesPage notesPage = new NotesPage(driver);
+		
+		notesPage.addNote("Note title", "Note description");
+		Assertions.assertEquals("You successfully added a new note", driver.findElement(By.id("success-msg")).getText());
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		notesPage.openNoteTabJS();
+		notesPage.editNote("note Title edited", "Edited note description");
+		
+		Assertions.assertEquals("You successfully edited a new note", driver.findElement(By.id("success-msg")).getText());
+		notesPage.openNoteTabJS();
+		Assertions.assertEquals("note Title edited",  driver.findElement(By.id("title-col")).getAttribute("innerHTML"));
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		notesPage.openNoteTabJS();
+		notesPage.deleteNote();
+
 
 	}
+
+	@Test
+	public void deleteNoteTest() {
+		signup();
+		login();
+		NotesPage notesPage = new NotesPage(driver);
+		notesPage.addNote( "Note title", "Note description");
+		Assertions.assertEquals("You successfully added a new note", driver.findElement(By.id("success-msg")).getText());
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		notesPage.openNoteTabJS();
+		notesPage.deleteNote();
+		Assertions.assertEquals("You successfully deleted a new note", driver.findElement(By.id("success-msg")).getText());
+		
+		notesPage.openNoteTabJS();
+		Assertions.assertEquals(false, notesPage.hasNotes());
+
+	}
+	
+
 }
+
+
+
+
+

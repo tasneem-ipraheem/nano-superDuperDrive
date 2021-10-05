@@ -49,12 +49,14 @@ public class NotesPage {
 	@FindBy(css = "#deleteNoteSubmit")
 	private WebElement deleteSubmit;
 
-	private  WebDriver driver;
+	private static  WebDriver driver;
 	
     public NotesPage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
-        this.driver=webDriver;
+        driver=webDriver;
     }
+    
+
 
 //TODO Check how tofind hidden elements
     /*
@@ -64,7 +66,6 @@ public class NotesPage {
      * */
 
 	public void addNote(String title, String description) {
-//		openNoteTabJS();
 
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", notesTabField);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", addNoteButton);
