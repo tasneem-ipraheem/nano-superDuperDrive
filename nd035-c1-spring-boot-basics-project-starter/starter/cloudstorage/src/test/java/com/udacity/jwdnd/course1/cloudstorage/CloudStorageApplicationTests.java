@@ -117,3 +117,4 @@ class CloudStorageApplicationTests {
 			Assertions.assertEquals("You successfully added a new note", driver.findElement(By.id("success-msg")).getText());
 		
 }
+}
