@@ -36,8 +36,6 @@ public class CredentialController {
     @PostMapping
     public String createCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
 
-//    	System.out.println(" createCredential : "+credential.toString());
-    	
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
         credential.setUserId(userId);
@@ -46,12 +44,10 @@ public class CredentialController {
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
         credential.setKey(encodedKey);
-        System.out.println(credential.getKey());
+//        System.out.println(credential.getKey());
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
         credential.setPassword(encryptedPassword);
         
-//    	System.out.println(" createCredential : "+credential.getUrl());
-
         
         int rowsAdded = credentialService.createCredential(credential);
 
@@ -65,60 +61,12 @@ public class CredentialController {
 
         return "redirect:/home";
     }
-
-   /* @PutMapping
-    public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
-        credential.setUserId(userId);
-        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
-        credential.setPassword(encryptedPassword);
-//        int rowsUpdated = credentialService.updateCredential(credential);
-//        if (rowsUpdated < 0){
-//            this.errorMessage = "There was an error for updating a credential. Please try again";
-//        }
-//        if (this.ifError == null) {
-//            redirectAttributes.addFlashAttribute("ifSuccess",true);
-//            redirectAttributes.addFlashAttribute("successMessage", "You successfully updated a credential");
-//        } else {
-//            redirectAttributes.addFlashAttribute("ifError", true);
-//            redirectAttributes.addFlashAttribute("errorMessage",this.errorMessage);
-//        }
-
-        return "redirect:/home";
-    }*/
-
-    /*
-    @PutMapping
-    public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
-        credential.setUserId(userId);
-//        System.out.println(model.getAttribute("credential-password"));
-        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
-        credential.setPassword(encryptedPassword);
-//        int rowsUpdated = credentialService.updateCredential(credential);
-//        if (rowsUpdated < 0){
-//            this.errorMessage = "There was an error for updating a credential. Please try again";
-//        }
-//        if (this.ifError == null) {
-//            redirectAttributes.addFlashAttribute("ifSuccess",true);
-//            redirectAttributes.addFlashAttribute("successMessage", "You successfully updated a credential");
-//        } else {
-//            redirectAttributes.addFlashAttribute("ifError", true);
-//            redirectAttributes.addFlashAttribute("errorMessage",this.errorMessage);
-//        }
-
-        return "redirect:/home";
-    }*/
-    
     
     @PutMapping
     public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
         User user = userService.getUser(authentication.getName());
         Integer userId = user.getUserId();
         credential.setUserId(userId);
-//        System.out.println(model.getAttribute("credential-password"));
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
         credential.setPassword(encryptedPassword);
         int rowsUpdated = credentialService.updateCredential(credential);
