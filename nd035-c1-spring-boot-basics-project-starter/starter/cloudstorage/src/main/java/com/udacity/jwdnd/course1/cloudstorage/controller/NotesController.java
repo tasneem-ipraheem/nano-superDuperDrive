@@ -64,10 +64,10 @@ public class NotesController {
 //		 
 		 if (rows > 0){
 	            redirectAttributes.addFlashAttribute("success",true);
-	            redirectAttributes.addFlashAttribute("successMessage", "You successfully added a new note");
+	            redirectAttributes.addFlashAttribute("successMessage", "You successfully edited a new note");
 	        } else {
 	            redirectAttributes.addFlashAttribute("error", true);
-	            redirectAttributes.addFlashAttribute("errorMessage","There was an error for adding a note. Please try again");
+	            redirectAttributes.addFlashAttribute("errorMessage","There was an error for edite a note. Please try again");
 	        }
 
 //		return "redirect:/home#nav-notes-tab";
@@ -87,10 +87,10 @@ public class NotesController {
 //		 
 		 if (rows > 0){
 	            redirectAttributes.addFlashAttribute("success",true);
-	            redirectAttributes.addFlashAttribute("successMessage", "You successfully added a new note");
+	            redirectAttributes.addFlashAttribute("successMessage", "You successfully deleted a new note");
 	        } else {
 	            redirectAttributes.addFlashAttribute("error", true);
-	            redirectAttributes.addFlashAttribute("errorMessage","There was an error for adding a note. Please try again");
+	            redirectAttributes.addFlashAttribute("errorMessage","There was an error for delete a note. Please try again");
 	        }
 
 //		return "redirect:/home#nav-notes-tab";
