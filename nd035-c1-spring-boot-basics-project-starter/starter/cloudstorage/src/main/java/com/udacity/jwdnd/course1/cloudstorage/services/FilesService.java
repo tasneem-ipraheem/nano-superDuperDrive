@@ -26,7 +26,7 @@ public class FilesService {
 	}
 	
 	public int createFile(MultipartFile uploadFile, Integer userid) throws IOException {
-		System.out.println("********** FilesService : createFile ********** ");
+//		System.out.println("********** FilesService : createFile ********** ");
 		Files files = new Files();
 		files.setFilename(uploadFile.getOriginalFilename());
 		files.setContenttype(uploadFile.getContentType());
@@ -34,13 +34,13 @@ public class FilesService {
 		files.setFilesize(""+uploadFile.getSize());
 		files.setUserid(userid);
 		
-		System.out.println("********** filesMapper.insertFile ********** ");
+//		System.out.println("********** filesMapper.insertFile ********** ");
 
 		return filesMapper.insertFile(files);
 	}
 
 	public boolean isFilenameAvailable(MultipartFile uploadFile, Integer userid) throws IOException {
-		System.out.println("********** FilesService : isFilenameAvailable ********** ");
+//		System.out.println("********** FilesService : isFilenameAvailable ********** ");
 		Files files = new Files();
 		files.setFilename(uploadFile.getOriginalFilename());
 		files.setUserid(userid);
@@ -50,7 +50,7 @@ public class FilesService {
 	}
 	
 	   public int deleteFile(Integer fileId) {
-	       System.out.println(fileId);
+//	       System.out.println(fileId);
 	        return filesMapper.delete(fileId);
 	   }
 
