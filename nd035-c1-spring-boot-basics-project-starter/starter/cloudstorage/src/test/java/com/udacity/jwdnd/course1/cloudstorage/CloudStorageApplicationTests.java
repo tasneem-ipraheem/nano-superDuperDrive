@@ -63,15 +63,15 @@ class CloudStorageApplicationTests {
 		}
 	}
 
-	String username = "Tasneem";
-	String password = "admin";
+	String username = "testName";
+	String password = "testPswrd";
 
 	// Perform signup process
 	public void signup() {
 
 		driver.get(this.baseURL + "/signup");
 		SignupPage signupPage = new SignupPage(driver);
-		signupPage.signup("Tasneem", "admin", this.username, this.password);
+		signupPage.signup("testName", "testPswrd", this.username, this.password);
 	}
 
 	// Perform login process
@@ -82,7 +82,7 @@ class CloudStorageApplicationTests {
 
 	}
 
-	
+
 	@Test
 	public void getSignupPage() {
 		driver.get(this.baseURL + "/signup");
@@ -96,27 +96,37 @@ class CloudStorageApplicationTests {
 	}
 	
 	@Test
-	public void getHomePage() {
+	public void getHomePageNOLogin() {
 		driver.get(this.baseURL + "/home");
 		Assertions.assertEquals("Login", driver.getTitle());
 	}
 
-	@Test
-	public void testRandomPage() {
-		driver.get(this.baseURL + "/dummy");
-		Assertions.assertEquals("Login", driver.getTitle());
-	}
-
 
 	@Test
-	public void testUserSignupLoginPage() {
+	public void testUserSignupLoginLogOut() {
 		signup();
 		login();
 		driver.get(this.baseURL + "/login?logout");
 		Assertions.assertEquals("You have been logged out", driver.findElement(By.id("logout-msg")).getText());
+		driver.get(this.baseURL + "/login");
+		Assertions.assertEquals("Login", driver.getTitle());
 
 	}
 
+	
+	@Test
+	public void testUserSignupLoginHome() {
+		signup();
+		login();
+		driver.get(this.baseURL + "/home");
+		Assertions.assertEquals("Home", driver.getTitle());
+
+	}
+
+	
+//	/*************		Notes  	*******************/
+
+	
 	@Test
 	public void createNoteTest() {
 		signup();
@@ -183,6 +193,61 @@ class CloudStorageApplicationTests {
 		notesPage.openNoteTabJS();
 		Assertions.assertEquals(false, notesPage.hasNotes());
 
+	}
+	
+	
+	/*************		Credential  	*******************/
+	@Test
+	public void createCredentialTest() {
+		signup();
+		login();
+		
+		driver.get(this.baseURL + "/home");
+		CredentialsPage credentialsPage = new CredentialsPage(driver);
+		credentialsPage.addCredential( "facebook", "testName", "testPswrd");
+		Assertions.assertEquals("You successfully added a new credential", driver.findElement(By.id("success-msg")).getText());
+		
+		driver.get(this.baseURL + "/home");
+		credentialsPage.openCredentialTabJS();
+		Assertions.assertEquals("facebook",  driver.findElement(By.id("url-col")).getAttribute("innerHTML"));
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		credentialsPage.deleteCredential();
+	}
+
+	@Test
+	public void editcredentialTest() {
+		signup();
+		login();
+		CredentialsPage credentialsPage = new CredentialsPage(driver);
+		credentialsPage.addCredential( "facebook", "testName", "testPswrd");
+		Assertions.assertEquals("You successfully added a new credential", driver.findElement(By.id("success-msg")).getText());
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		credentialsPage.editCredential("edited facebook", "Edited username", "Edited password");
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		Assertions.assertEquals("edited facebook",  driver.findElement(By.id("url-col")).getAttribute("innerHTML"));
+		
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		credentialsPage.deleteCredential();
+	}
+
+	@Test
+	public void deleteCredentialTest() {
+		signup();
+		login();
+		CredentialsPage credentialsPage = new CredentialsPage(driver);
+		credentialsPage.addCredential( "facebook", "testName", "testPswrd");
+		Assertions.assertEquals("You successfully added a new credential", driver.findElement(By.id("success-msg")).getText());
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		credentialsPage.deleteCredential();
+		driver.get("http://localhost:" + this.port + "/home");
+		credentialsPage.openCredentialTabJS();
+		Assertions.assertEquals(false, credentialsPage.hasCredentials());
 	}
 	
 
