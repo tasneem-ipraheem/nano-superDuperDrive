@@ -61,10 +61,10 @@ public class NotesPage {
 	/******************************************/
 
 	List<WebElement> notesList;
+//	JavascriptExecutor executer;
+//	WebDriverWait wait;
+	private  WebDriver driver;
 	JavascriptExecutor executer;
-	WebDriverWait wait;
-	private static WebDriver driver;
-
 	String clickStr = "arguments[0].click();";
 
 //TODO Check how to find hidden elements
@@ -76,64 +76,117 @@ public class NotesPage {
 	 */
 
 	public NotesPage(WebDriver webDriver) {
+		
+		this.driver = webDriver;
 		PageFactory.initElements(webDriver, this);
-		driver = webDriver;
+//		sleep
 		executer = (JavascriptExecutor) driver;
-		wait = new WebDriverWait(driver, 30);
+		executer.executeScript("arguments[0].click();", notesTabField);
+
+//		wait = new WebDriverWait(driver, 30);
+		
+//		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(noteTitleText)).sendKeys(title); 
 	}
 
 	public void addNote(String title, String description) {
+		
+		executer = (JavascriptExecutor) driver; 
+		executer.executeScript("arguments[0].click();", addNoteButton);
+		executer.executeScript("arguments[0].value='" + title + "';", noteTitleField);
+		executer.executeScript("arguments[0].value='" + description + "';", noteDescriptionField);
+		executer.executeScript("arguments[0].click();", addSubmit);
+		
+		
+//		JavascriptExecutor jse = (JavascriptExecutor) driver; 
+//		jse.executeScript("arguments[0].click()", this.driver.findElement(By.id("nav-notes-tab")));
+//		jse.executeScript("arguments[0].click()", this.driver.findElement(By.id("add-note-button")));
+//		jse.executeScript("arguments[0].value='"+ title + "';", this.driver.findElement(By.id("note-title")));
+//		jse.executeScript("arguments[0].value='"+ description + "';", this.driver.findElement(By.id("note-description")));
+//		jse.executeScript("arguments[0].click()", this.driver.findElement(By.id("note-submit")));
 
-		this.notesTabField.click();
+		
+//		this.driver.findElement(By.id("nav-notes-tab")).click();
+//		this.driver.findElement(By.id("add-note-button")).click();
+//		this.driver.findElement(By.id("note-title")).sendKeys(title);
+//		this.driver.findElement(By.id("note-description")).sendKeys(description);
+//		this.driver.findElement(By.id("note-submit")).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(addNoteButton));
-		this.addNoteButton.click();
+		
 
-		wait.until(ExpectedConditions.elementToBeClickable(noteTitleField));
-		this.noteTitleField.sendKeys(title);
+//		jse.executeScript("arguments[0].click()", notesTab);
+//		new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(addNoteBtn)).click(); 
+//		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(noteTitleText)).sendKeys(title); 
+//		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(noteDescriptionText)).sendKeys(description); noteSubmitBtn.click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(noteDescriptionField));
-		this.noteDescriptionField.sendKeys(description);
 
-		executer.executeScript(clickStr, addSubmit);
+
+//		this.notesTabField.click();
+//		wait.until(ExpectedConditions.elementToBeClickable(addNoteButton));
+//		wait.until(ExpectedConditions.elementToBeClickable(noteTitleField));
+//		wait.until(ExpectedConditions.elementToBeClickable(noteDescriptionField));
+//		this.noteDescriptionField.sendKeys(description);
+//		executer.executeScript(clickStr, addSubmit);
 
 	}
 
 	public void editNote(String title, String description) {
 
-		this.notesTabField.click();
+		executer = (JavascriptExecutor) driver; 
+		executer.executeScript("arguments[0].click();", editButton);
+		executer.executeScript("arguments[0].value='" + title + "';", editTitleField);
+		executer.executeScript("arguments[0].value='" + description + "';", editDescriptionField);
+		executer.executeScript("arguments[0].click();", editSubmit);
 
-		wait.until(ExpectedConditions.elementToBeClickable(editButton));
-		this.editButton.click();
+		
+//		this.notesTabField.click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(editTitleField));
-		this.editTitleField.clear();
-		this.editTitleField.sendKeys(title);
+//		wait.until(ExpectedConditions.elementToBeClickable(editButton));
+//		this.editButton.click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(editDescriptionField));
-		this.editDescriptionField.clear();
-		this.editDescriptionField.sendKeys(description);
-
-		executer.executeScript(clickStr, editSubmit);
+//		wait.until(ExpectedConditions.elementToBeClickable(editTitleField));
+//		this.editTitleField.clear();
+//		this.editTitleField.sendKeys(title);
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(editDescriptionField));
+//		this.editDescriptionField.clear();
+//		this.editDescriptionField.sendKeys(description);
+//
+//		executer.executeScript(clickStr, editSubmit);
 	}
 
 	public void deleteNote() {
+		
+		executer = (JavascriptExecutor) driver; 
+		executer.executeScript("arguments[0].click();", deleteButton);
+		executer.executeScript("arguments[0].click();", deleteSubmit);
 
-		this.notesTabField.click();
+		
+		//		this.driver.findElement(By.id("nav-notes-tab")).click();
+//		this.driver.findElement(By.id("delete-note-button")).click();
+//		this.driver.findElement(By.id("deleteNoteSubmit")).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
-		this.deleteButton.click();
+//		this.notesTabField.click();
 
-		executer.executeScript(clickStr, deleteSubmit);
+
+//		wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
+//		this.deleteButton.click();
+	
+//		@FindBy(css = "#delete-note-button")
+//		private WebElement deleteButton;
+//
+//		@FindBy(css = "#deleteNoteSubmit")
+//		private WebElement deleteSubmit;
+//		executer.executeScript(clickStr, deleteSubmit);
 
 	}
 
-	public WebElement getNotesTabField() {
-		return notesTabField;
-	}
+//	public WebElement getNotesTabField() {
+////		return notesTabField;
+//		return this.driver.findElement(By.id("nav-notes-tab"));
+//	}
 
 	public int getNotesTableSize() {
-		this.notesTabField.click();
+		this.driver.findElement(By.id("nav-notes-tab")).click();
 		notesList = notesTable.findElements(By.id("title-col"));
 		return notesList.size();
 	}
@@ -141,5 +194,11 @@ public class NotesPage {
 	public String getNewNoteTitle() {
 		return notesTableFirstTitleCol.getAttribute("innerHTML");
 
+	}
+	
+	public void navToNotesView() {
+		executer = (JavascriptExecutor) driver;
+		executer.executeScript("arguments[0].click();", notesTabField);
+//		return this.driver.findElement(By.id("nav-notes-tab"));
 	}
 }

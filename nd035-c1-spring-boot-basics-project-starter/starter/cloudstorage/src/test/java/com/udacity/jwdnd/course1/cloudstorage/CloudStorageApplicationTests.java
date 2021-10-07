@@ -58,6 +58,17 @@ class CloudStorageApplicationTests {
 		baseURL = "http://localhost:" + port;
 //		driver = new ChromeDriver();
 		
+		driver.get(this.baseURL + "/signup");
+		signupPage = new SignupPage(driver);
+		signupPage.signup("rootName", "rootPswrd", this.username, this.password);
+
+		driver.get(this.baseURL + "/login");
+		loginPage = new LoginPage(driver);
+		loginPage.login(this.username, this.password);
+		
+		driver.get(this.baseURL + "/home");
+		notesPage = new NotesPage(driver);
+		
 	}
 
 //	@AfterEach
@@ -74,20 +85,20 @@ class CloudStorageApplicationTests {
 	SignupPage signupPage;
 	LoginPage loginPage ;
 
-	public void signupThenLogin() {
-
-		driver.get(this.baseURL + "/signup");
-		signupPage = new SignupPage(driver);
-		signupPage.signup("rootName", "rootPswrd", this.username, this.password);
-
-		driver.get(this.baseURL + "/login");
-		loginPage = new LoginPage(driver);
-		loginPage.login(this.username, this.password);
-		
-		driver.get(this.baseURL + "/home");
-
-
-	}
+//	public void signupThenLogin() {
+//
+//		driver.get(this.baseURL + "/signup");
+//		signupPage = new SignupPage(driver);
+//		signupPage.signup("rootName", "rootPswrd", this.username, this.password);
+//
+//		driver.get(this.baseURL + "/login");
+//		loginPage = new LoginPage(driver);
+//		loginPage.login(this.username, this.password);
+//		
+//		driver.get(this.baseURL + "/home");
+//
+//
+//	}
 
 	/**************** Login/signup ********************/
 
@@ -147,17 +158,18 @@ class CloudStorageApplicationTests {
 	@Test
 	public void createNoteTest() {
 		
-		signupThenLogin();
-		
-		notesPage = new NotesPage(driver);
+//		notesPage = new NotesPage(driver);
 		notesPage.addNote("Note title", "Note description");
 		
 		driver.get(this.baseURL + "/home");
-		notesPage.getNotesTabField().click();
+//		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
 		Assertions.assertEquals("Note title",  notesPage.getNewNoteTitle());
 
 		driver.get("http://localhost:" + this.port + "/home");
-		notesPage.getNotesTabField().click();
+//		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
+
 		notesPage.deleteNote();
 
 	}	
@@ -167,20 +179,23 @@ class CloudStorageApplicationTests {
 	
 	@Test
 	public void editNoteTest() {
-		signupThenLogin();
+//		signupThenLogin();
 		
-		notesPage = new NotesPage(driver);
+//		notesPage = new NotesPage(driver);
 		notesPage.addNote("Note title", "Note description");
 		
 		driver.get("http://localhost:" + this.port + "/home");
-		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
+
 		notesPage.editNote("note Title edited", "Edited note description");
 		
-		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
+
 		Assertions.assertEquals("note Title edited", notesPage.getNewNoteTitle());
 		
 		driver.get("http://localhost:" + this.port + "/home");
-		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
+
 		notesPage.deleteNote();
 
 
@@ -188,16 +203,14 @@ class CloudStorageApplicationTests {
 
 	@Test
 	public void deleteNoteTest() {
-		signupThenLogin();
 		
-		notesPage = new NotesPage(driver);
+//		notesPage = new NotesPage(driver);
 		notesPage.addNote( "Note title", "Note description");
 		
-		notesPage.getNotesTabField().click();
-		notesPage.deleteNote();
+		notesPage.navToNotesView();		notesPage.deleteNote();
 		
 		driver.get("http://localhost:" + this.port + "/home");
-		notesPage.getNotesTabField().click();
+		notesPage.navToNotesView();
 		
 		Assertions.assertEquals(0,notesPage.getNotesTableSize());
 
