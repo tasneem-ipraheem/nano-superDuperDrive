@@ -95,7 +95,7 @@ public class NotesPage {
 		executer.executeScript("arguments[0].value='" + title + "';", noteTitleField);
 		executer.executeScript("arguments[0].value='" + description + "';", noteDescriptionField);
 		executer.executeScript("arguments[0].click();", addSubmit);
-		
+		executer.executeScript("arguments[0].click();", notesTabField);
 		
 //		JavascriptExecutor jse = (JavascriptExecutor) driver; 
 //		jse.executeScript("arguments[0].click()", this.driver.findElement(By.id("nav-notes-tab")));
@@ -136,7 +136,7 @@ public class NotesPage {
 		executer.executeScript("arguments[0].value='" + title + "';", editTitleField);
 		executer.executeScript("arguments[0].value='" + description + "';", editDescriptionField);
 		executer.executeScript("arguments[0].click();", editSubmit);
-
+		executer.executeScript("arguments[0].click();", notesTabField);
 		
 //		this.notesTabField.click();
 
@@ -159,7 +159,7 @@ public class NotesPage {
 		executer = (JavascriptExecutor) driver; 
 		executer.executeScript("arguments[0].click();", deleteButton);
 		executer.executeScript("arguments[0].click();", deleteSubmit);
-
+		executer.executeScript("arguments[0].click();", notesTabField);
 		
 		//		this.driver.findElement(By.id("nav-notes-tab")).click();
 //		this.driver.findElement(By.id("delete-note-button")).click();
@@ -171,11 +171,6 @@ public class NotesPage {
 //		wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
 //		this.deleteButton.click();
 	
-//		@FindBy(css = "#delete-note-button")
-//		private WebElement deleteButton;
-//
-//		@FindBy(css = "#deleteNoteSubmit")
-//		private WebElement deleteSubmit;
 //		executer.executeScript(clickStr, deleteSubmit);
 
 	}
@@ -196,9 +191,9 @@ public class NotesPage {
 
 	}
 	
-	public void navToNotesView() {
-		executer = (JavascriptExecutor) driver;
-		executer.executeScript("arguments[0].click();", notesTabField);
-//		return this.driver.findElement(By.id("nav-notes-tab"));
-	}
+//	public void navToNotesView() {
+//		executer = (JavascriptExecutor) driver;
+//		executer.executeScript("arguments[0].click();", notesTabField);
+////		return this.driver.findElement(By.id("nav-notes-tab"));
+//	}
 }
