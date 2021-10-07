@@ -153,8 +153,8 @@ class CloudStorageApplicationTests {
 		
 		driver.get(this.baseURL + "/home");
 		notesPage.getNotesTabField().click();
-		Assertions.assertEquals("Note title",  driver.findElement(By.id("title-col")).getAttribute("innerHTML"));
-		
+		Assertions.assertEquals("Note title",  notesPage.getNewNoteTitle());
+
 		driver.get("http://localhost:" + this.port + "/home");
 		notesPage.getNotesTabField().click();
 		notesPage.deleteNote();
@@ -176,7 +176,7 @@ class CloudStorageApplicationTests {
 		notesPage.editNote("note Title edited", "Edited note description");
 		
 		notesPage.getNotesTabField().click();
-		Assertions.assertEquals("note Title edited",  driver.findElement(By.id("title-col")).getAttribute("innerHTML"));
+		Assertions.assertEquals("note Title edited", notesPage.getNewNoteTitle());
 		
 		driver.get("http://localhost:" + this.port + "/home");
 		notesPage.getNotesTabField().click();
@@ -202,7 +202,7 @@ class CloudStorageApplicationTests {
 
 	}
 	
-	/*
+/*
 	@Test
 	public void createCredentialTest() {
 		signup();
@@ -256,7 +256,7 @@ class CloudStorageApplicationTests {
 		Assertions.assertEquals(false, credentialsPage.hasCredentials());
 	}
 	
-	*/
+*/
 
 }
 
