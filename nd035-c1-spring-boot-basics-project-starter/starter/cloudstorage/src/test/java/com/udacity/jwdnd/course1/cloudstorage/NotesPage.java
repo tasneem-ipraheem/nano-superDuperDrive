@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NotesPage {
 	@FindBy(css = "#nav-notes-tab")
@@ -34,7 +37,7 @@ public class NotesPage {
 	@FindBy(css = "#note-description")
 	private WebElement noteDescriptionField;
 
-	@FindBy(css = "#noteSubmit")
+	@FindBy(css = "#note-submit")
 	private WebElement addSubmit;
 
 	@FindBy(css = "#edit-note-title")
@@ -51,14 +54,25 @@ public class NotesPage {
 
 	private static  WebDriver driver;
 	
+	
+	
+	String clickStr = "arguments[0].click();";
+	String valueStr = "arguments[0].value='" ;
+	
+	JavascriptExecutor executer;
+	WebDriverWait wait ;
+	
+	
     public NotesPage(WebDriver webDriver) {
         PageFactory.initElements(webDriver, this);
         driver=webDriver;
+    	executer =(JavascriptExecutor) driver;
+    	wait = new WebDriverWait (driver, 30);
     }
     
 
 
-//TODO Check how tofind hidden elements
+//TODO Check how to find hidden elements
     /*
      *	this.addNoteButton.click();  -->  element should be in the [this page]
 	 *	https://www.edureka.co/community/94723/how-resolve-this-error-element-not-interactable-any-solution
@@ -66,57 +80,69 @@ public class NotesPage {
      * */
 
 	public void addNote(String title, String description) {
+		
+		this.notesTabField.click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(addNoteButton));
+		this.addNoteButton.click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(noteTitleField));
+		this.noteTitleField.sendKeys(title);
 
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", notesTabField);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", addNoteButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + title + "';", noteTitleField);
-		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + description + "';", noteDescriptionField);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", addSubmit);
+		wait.until(ExpectedConditions.elementToBeClickable(noteDescriptionField));
+		this.noteDescriptionField.sendKeys(description);
 		
-		
-//		this.notesTabField.click();
-//		openNoteTabJS();
-//		this.noteTitleField.sendKeys(title);
-//		this.noteDescriptionField.sendKeys(description);
-//		this.addSubmit.click();
-//		driver.findElement(By.linkText("Save changes")).click(); 
+		executer.executeScript(clickStr, addSubmit);
 
 	}
 
-	public void editNote(String title, String desc) {
-//		this.notesTabField.click();
+	public void editNote(String title, String description) {
+//		
+		this.notesTabField.click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(editButton));
+		this.editButton.click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(editTitleField));
+		this.editTitleField.clear();
+		this.editTitleField.sendKeys(title);
 
-		openNoteTabJS();
-
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", editButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + title + "';", editTitleField);
-		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + desc + "';", editDescriptionField);
-//		this.editTitleField.sendKeys(title);
-//		this.editDescriptionField.sendKeys(desc);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", editSubmit);
+		wait.until(ExpectedConditions.elementToBeClickable(editDescriptionField));
+		this.editDescriptionField.clear();
+		this.editDescriptionField.sendKeys(description);
+		
+		executer.executeScript(clickStr, editSubmit);
 	}
 
 	public void deleteNote() {
-//		this.notesTabField.click();
-
-		openNoteTabJS();
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteButton);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteSubmit);
+		
+		this.notesTabField.click();
+		wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
+		this.deleteButton.click();
+		executer.executeScript(clickStr, deleteSubmit);
 
 	}
+	
+	
 
-	public boolean hasNotes() {
+	public WebElement getNotesTabField() {
+		return notesTabField;
+	}
+
+
+
+	public int getNotesTableSize() {
 		this.notesTabField.click();
 
 		
 		List<WebElement> notesList = notesTable.findElements(By.id("title-col"));
-		return notesList.size() != 0;
+		return notesList.size() ;
 	}
 
-	public void openNoteTabJS() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", notesTabField);
-//		this.notesTabField.click();
-
-		
-	}
+//	public void openNoteTab() {
+//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", notesTabField);
+////		this.notesTabField.click();
+//
+//		
+//	}
 }

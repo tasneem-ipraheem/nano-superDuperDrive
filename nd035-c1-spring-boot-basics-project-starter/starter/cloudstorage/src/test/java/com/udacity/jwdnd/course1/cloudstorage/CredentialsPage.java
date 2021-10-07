@@ -63,12 +63,12 @@ public class CredentialsPage {
 		wait = new WebDriverWait(driver, 1000);
 	}
 
-	public void openCredentialTabJS() {
+	public void openCredentialTab() {
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", credentialsTabField);
 	}
 
 	public void  addCredential(String url, String username ,String password){
-		this.openCredentialTabJS();
+		this.openCredentialTab();
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", addButton);
 		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + url + "';", credentialUrl);
 		((JavascriptExecutor) driver).executeScript("arguments[0].value='" + username + "';", credentialUsername);

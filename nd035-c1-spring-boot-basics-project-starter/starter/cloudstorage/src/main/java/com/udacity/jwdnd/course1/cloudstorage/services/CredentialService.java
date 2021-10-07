@@ -10,18 +10,11 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 @Service
 public class CredentialService {
 	
-    private final CredentialMapper credentialMapper;
+    private CredentialMapper credentialMapper;
 
     public CredentialService(CredentialMapper credentialMapper) {
         this.credentialMapper = credentialMapper;
     }
-    
-    
-    
-    public int deleteCredential(int credentialId) {
-        return credentialMapper.deleteCredential(credentialId);
-    }
-
 
 
 	public int createCredential(Credential credential) {
@@ -34,6 +27,12 @@ public class CredentialService {
 	public List<Credential> getCredentials(Integer userId) {
 		return credentialMapper.getCredentialsByUserId(userId);
 	}
+    
+    
+    
+    public int deleteCredential(int credentialId) {
+        return credentialMapper.deleteCredential(credentialId);
+    }
 
 
 
