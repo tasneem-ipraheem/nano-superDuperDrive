@@ -81,9 +81,9 @@ public class CredentialsPage {
 
 		executer = (JavascriptExecutor) driver;
 		executer.executeScript("arguments[0].click();", addCredentialButton);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialUrlField)).sendKeys(url);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialUsernameField)).sendKeys(username);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialPasswordField)).sendKeys(password);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(credentialUrlField)).sendKeys(url);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(credentialUsernameField)).sendKeys(username);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(credentialPasswordField)).sendKeys(password);
 		executer.executeScript("arguments[0].click();", credentialAddSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
@@ -97,7 +97,7 @@ public class CredentialsPage {
 		executer.executeScript("arguments[0].click();", deleteSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
-
+//		System.out.println(" **************************" );
 
 	}
 	
@@ -106,12 +106,15 @@ public class CredentialsPage {
 		
 		executer = (JavascriptExecutor) driver;
 		executer.executeScript("arguments[0].click();", editButton);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editUrlField)).clear();
-		editUrlField.sendKeys(url);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editUsernameField)).clear();
-		editUsernameField.sendKeys(username);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editPasswordField)).clear();
-		editPasswordField.sendKeys(password);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editUrlField)).clear();
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editUrlField)).sendKeys(url);
+		
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editUsernameField)).clear();
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editUsernameField)).sendKeys(username);
+		
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editPasswordField)).clear();
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editPasswordField)).sendKeys(password);
+		
 		executer.executeScript("arguments[0].click();", editSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
@@ -127,6 +130,13 @@ public class CredentialsPage {
 		this.driver.findElement(By.id("nav-credentials-tab")).click();
 		credentialList = credentialsTable.findElements(By.id("url-col"));
 		return credentialList.size();
+	}
+	
+	public List<WebElement> getCredentialUrlList() {
+		
+		this.driver.findElement(By.id("nav-credentials-tab")).click();
+		credentialList = credentialsTable.findElements(By.id("url-col"));
+		return credentialList;
 	}
 
 	public String getNewCredentialTitle() {

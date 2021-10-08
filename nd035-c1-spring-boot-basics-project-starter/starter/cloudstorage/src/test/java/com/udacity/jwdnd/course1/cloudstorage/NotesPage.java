@@ -88,8 +88,8 @@ public class NotesPage {
 		executer = (JavascriptExecutor) driver; 
 		executer.executeScript("arguments[0].click();", addNoteButton);
 		
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(noteTitleField)).sendKeys(title);
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(noteDescriptionField)).sendKeys(description);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(noteTitleField)).sendKeys(title);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(noteDescriptionField)).sendKeys(description);
 		
 		executer.executeScript("arguments[0].click();", addSubmit);
 		executer.executeScript("arguments[0].click();", notesTabField);
@@ -101,11 +101,11 @@ public class NotesPage {
 		executer = (JavascriptExecutor) driver; 
 		executer.executeScript("arguments[0].click();", editButton);
 		
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editTitleField)).clear();
-		editTitleField.sendKeys(title);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editTitleField)).clear();
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editTitleField)).sendKeys(title);
 		
-		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editDescriptionField)).clear();
-		editDescriptionField.sendKeys(description);
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editDescriptionField)).clear();
+		new WebDriverWait(driver, 100).until(ExpectedConditions.visibilityOf(editDescriptionField)).sendKeys(description);
 		
 		executer.executeScript("arguments[0].click();", editSubmit);
 		executer.executeScript("arguments[0].click();", notesTabField);

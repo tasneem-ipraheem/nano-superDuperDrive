@@ -29,16 +29,16 @@ public class Files {
 			super();
 		}
 		
-	    public Files(Integer fileId, Integer userid, String filename, String contenttype, String filesize,
-				byte[] filedata) {
-			super();
-			this.fileId = fileId;
-			this.userid = userid;
-			this.filename = filename;
-			this.contenttype = contenttype;
-			this.filesize = filesize;
-			this.filedata = filedata;
-		}
+//	    public Files(Integer fileId, Integer userid, String filename, String contenttype, String filesize,
+//				byte[] filedata) {
+//			super();
+//			this.fileId = fileId;
+//			this.userid = userid;
+//			this.filename = filename;
+//			this.contenttype = contenttype;
+//			this.filesize = filesize;
+//			this.filedata = filedata;
+//		}
 
 		public Integer getFileId() {
 			return fileId;

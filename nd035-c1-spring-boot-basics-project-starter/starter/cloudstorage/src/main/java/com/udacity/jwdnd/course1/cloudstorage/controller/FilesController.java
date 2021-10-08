@@ -25,65 +25,65 @@ public class FilesController {
 
 	FilesService filesService;
 	UserService userService;
-
+	User user;
+	Integer userId;
+	
 	public FilesController(FilesService filesService, UserService userService) {
 		this.filesService = filesService;
 		this.userService = userService;
 	}
 
 	@PostMapping
-	public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile, Authentication authentication,
+	public String uploadFile(@RequestParam MultipartFile multipartFile, Authentication authentication,
 			RedirectAttributes redirectAttributes) {
 
 		if (multipartFile.isEmpty()) {
-			redirectAttributes.addFlashAttribute("success", false);
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "File not selected to upload");
+			redirectAttributes.addFlashAttribute("errorMessage", "Select file to upload !");
 			return "redirect:/home";
 		}
 
-		User user = this.userService.getUser(authentication.getName());
-		Integer userId = user.getUserId();
+		user = this.userService.getUser(authentication.getName());
+		userId = user.getUserId();
 
 		try {
 			if (filesService.isFilenameAvailable(multipartFile, userId)) {
 
-				redirectAttributes.addFlashAttribute("success", false);
 				redirectAttributes.addFlashAttribute("error", true);
-				redirectAttributes.addFlashAttribute("errorMessage", "file name already exists");
+				redirectAttributes.addFlashAttribute("errorMessage", "File already exist !");
 				return "redirect:/home";
 			}
 
 			filesService.createFile(multipartFile, userId);
 			redirectAttributes.addFlashAttribute("success", true);
-			redirectAttributes.addFlashAttribute("successMessage", "New File added successfully");
+			redirectAttributes.addFlashAttribute("successMessage", "File added successfully");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "System error!" + e.getMessage());
+			redirectAttributes.addFlashAttribute("errorMessage",  e.getMessage());
 		}
 		return "redirect:/home";
 	}
 	
     @GetMapping("/deleteFile/{id}")
-    public String deleteFile(@PathVariable("id") Integer id,RedirectAttributes redirectAttributes ) {
+    public String deleteFile(@PathVariable Integer id,RedirectAttributes redirectAttributes ) {
 
         try {
             filesService.deleteFile(id);
             redirectAttributes.addFlashAttribute("success", true);
-            redirectAttributes.addFlashAttribute("successMessage", "file Deleted");
+            redirectAttributes.addFlashAttribute("successMessage", "File Deleted successfully");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage", "System error!" + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage",  e.getMessage());
         }
         return "redirect:/home";
     }
     
     @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> download(@PathVariable("fileId") Integer fileId) {
+    public ResponseEntity<Resource> download(@PathVariable Integer fileId) {
         Files files = filesService.getFileById(fileId);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(httpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + files.getFilename());
+        httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = " + files.getFilename());
         httpHeaders.add("Cache-control", "no-cache, no-store, must-revalidate");
         httpHeaders.add("Pragma", "no-cache");
         httpHeaders.add("Expires", "0");

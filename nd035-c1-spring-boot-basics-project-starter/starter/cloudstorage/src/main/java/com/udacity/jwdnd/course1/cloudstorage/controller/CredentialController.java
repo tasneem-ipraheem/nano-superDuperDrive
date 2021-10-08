@@ -5,6 +5,7 @@ import java.util.Base64;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,8 @@ public class CredentialController {
     private CredentialService credentialService;
     private UserService userService;
     private EncryptionService encryptionService;
-    
+    User user;
+    Integer userId ;
     
     public CredentialController(CredentialService credentialService, UserService userService, EncryptionService encryptionService) {
         this.credentialService = credentialService;
@@ -34,29 +36,29 @@ public class CredentialController {
     }
     
     @PostMapping
-    public String createCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
+    public String createCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes, Model model){
 
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
+        user = userService.getUser(authentication.getName());
+        userId = user.getUserId();
         credential.setUserId(userId);
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
         String encodedKey = Base64.getEncoder().encodeToString(key);
         credential.setKey(encodedKey);
-//        System.out.println(credential.getKey());
+
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
         credential.setPassword(encryptedPassword);
         
         
-        int rowsAdded = credentialService.createCredential(credential);
+        int rows = credentialService.createCredential(credential);
 
-        if (rowsAdded > 0) {
+        if (rows > 0) {
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "You successfully added a new credential");
+            redirectAttributes.addFlashAttribute("successMessage", "Credential added successfully");
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage", "There was an error for adding a note. Please try again");
+            redirectAttributes.addFlashAttribute("errorMessage", "Credential add fail");
         }
 
         return "redirect:/home";
@@ -64,20 +66,20 @@ public class CredentialController {
     
     @PutMapping
     public String updateCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
+        user = userService.getUser(authentication.getName());
+        userId = user.getUserId();
         credential.setUserId(userId);
         String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), credential.getKey());
         credential.setPassword(encryptedPassword);
-        int rowsUpdated = credentialService.updateCredential(credential);
+        int rows = credentialService.updateCredential(credential);
         
         
-        if (rowsUpdated > 0){
+        if (rows > 0){
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "You successfully updated a credential");
+            redirectAttributes.addFlashAttribute("successMessage", "Credential updated Successfully");
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage","There was an error for updating a credential. Please try again");
+            redirectAttributes.addFlashAttribute("errorMessage","Credential update Fail");
         }
 
         return "redirect:/home";
@@ -86,17 +88,17 @@ public class CredentialController {
     
     @DeleteMapping
     public String deleteCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes){
-        User user = userService.getUser(authentication.getName());
-        Integer userId = user.getUserId();
+        user = userService.getUser(authentication.getName());
+        userId = user.getUserId();
         credential.setUserId(userId);
         
-        int rowsUpdated = credentialService.deleteCredential(credential.getCredentialId());
-        if (rowsUpdated > 0) {
+        int rows = credentialService.deleteCredential(credential.getCredentialId());
+        if (rows > 0) {
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "You successfully deleted a credential");
+            redirectAttributes.addFlashAttribute("successMessage", "Credential deleted successfully");
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage","There was an error for deleting a credential. Please try again");
+            redirectAttributes.addFlashAttribute("errorMessage","Credential delete Fail");
         }
 
         return "redirect:/home";
