@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CredentialsPage {
 
@@ -64,9 +66,6 @@ public class CredentialsPage {
 	List<WebElement> credentialList;
 	private WebDriver driver;
 	JavascriptExecutor executer;
-//	WebDriverWait wait;
-
-	String clickStr = "arguments[0].click();";
 
 	public CredentialsPage(WebDriver webDriver) {
 		this.driver = webDriver;
@@ -75,40 +74,18 @@ public class CredentialsPage {
 		executer = (JavascriptExecutor) driver;
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
-//		wait = new WebDriverWait(driver, 30);
 	}
 
-//	public void openCredentialTab() {
-//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", credentialsTabField);
-//	}
 
 	public void addCredential(String url, String username, String password) {
 
 		executer = (JavascriptExecutor) driver;
 		executer.executeScript("arguments[0].click();", addCredentialButton);
-		executer.executeScript("arguments[0].value='" + url + "';", credentialUrlField);
-		executer.executeScript("arguments[0].value='" + username + "';", credentialUsernameField);
-		executer.executeScript("arguments[0].value='" + password + "';", credentialPasswordField);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialUrlField)).sendKeys(url);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialUsernameField)).sendKeys(username);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(credentialPasswordField)).sendKeys(password);
 		executer.executeScript("arguments[0].click();", credentialAddSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
-
-
-//		wait.until(ExpectedConditions.elementToBeClickable(credentialsTabField));
-//		this.credentialsTabField.click();
-//		
-//		wait.until(ExpectedConditions.elementToBeClickable(addCredentialButton));
-//		this.addCredentialButton.click();
-//
-//		wait.until(ExpectedConditions.elementToBeClickable(credentialUrlField));
-//		this.credentialUrlField.sendKeys(url);
-//
-//		wait.until(ExpectedConditions.elementToBeClickable(credentialUsernameField));
-//		this.credentialUsernameField.sendKeys(username);
-//		
-//		wait.until(ExpectedConditions.elementToBeClickable(credentialPasswordField));
-//		this.credentialPasswordField.sendKeys(password);
-//
-//		executer.executeScript(clickStr, credentialAddSubmit);
 
 	}
 
@@ -120,9 +97,7 @@ public class CredentialsPage {
 		executer.executeScript("arguments[0].click();", deleteSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
-		
-//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteButton);
-//		((JavascriptExecutor) driver).executeScript("arguments[0].click();", deleteSubmit);
+
 
 	}
 	
@@ -131,17 +106,15 @@ public class CredentialsPage {
 		
 		executer = (JavascriptExecutor) driver;
 		executer.executeScript("arguments[0].click();", editButton);
-		executer.executeScript("arguments[0].value='" + url + "';", editUrlField);
-		executer.executeScript("arguments[0].value='" + username + "';", editUsernameField);
-		executer.executeScript("arguments[0].value='" + password + "';", editPasswordField);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editUrlField)).clear();
+		editUrlField.sendKeys(url);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editUsernameField)).clear();
+		editUsernameField.sendKeys(username);
+		new WebDriverWait(driver, 50).until(ExpectedConditions.visibilityOf(editPasswordField)).clear();
+		editPasswordField.sendKeys(password);
 		executer.executeScript("arguments[0].click();", editSubmit);
 		executer.executeScript("arguments[0].click();", credentialsTabField);
 
-//	((JavascriptExecutor) driver).executeScript("arguments[0].click();", editButton);
-//	((JavascriptExecutor) driver).executeScript("arguments[0].value='" + url + "';", editUrlField);
-//	((JavascriptExecutor) driver).executeScript("arguments[0].value='" + username + "';", editUsernameField);
-//	((JavascriptExecutor) driver).executeScript("arguments[0].value='" + password + "';", editPasswordField);
-//	((JavascriptExecutor) driver).executeScript("arguments[0].click();", editSubmit);
 }
 
 
@@ -160,14 +133,4 @@ public class CredentialsPage {
 		return credentialsTableFirstTitleCol.getAttribute("innerHTML");
 
 	}
-//	public void navCreditinalsView() {
-//		executer = (JavascriptExecutor) driver;
-//		executer.executeScript("arguments[0].click();", credentialsTabField);
-//	}
-//
-//	public boolean hasCredentials() {
-//		List<WebElement> credentialsList = credentialsTable.findElements(By.id("table-credentialTitle"));
-//		return credentialsList.size() != 0;
-//	}
-
 }

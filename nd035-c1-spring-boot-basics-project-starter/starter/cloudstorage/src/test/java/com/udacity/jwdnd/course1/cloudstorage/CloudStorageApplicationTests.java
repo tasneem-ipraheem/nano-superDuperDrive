@@ -178,7 +178,7 @@ class CloudStorageApplicationTests {
 	 */
 
 	@Test
-	public void editNoteTest() {
+	public void editNote() {
 		
 		//user signup and login and moved to home page --> at beforeEach()
 		
@@ -205,7 +205,7 @@ class CloudStorageApplicationTests {
 	 */
 	
 	@Test
-	public void deleteNoteTest() {
+	public void deleteNote() {
 		
 		//user signup and login and moved to home page --> at beforeEach()
 
@@ -230,7 +230,7 @@ class CloudStorageApplicationTests {
 	
 
 	@Test
-	public void createCredentialTest() {
+	public void createCredential() {
 
 		//user signup and login and moved to home page --> at beforeEach()
 
@@ -252,7 +252,7 @@ class CloudStorageApplicationTests {
 	 */
 
 	@Test
-	public void editcredentialTest() {
+	public void editcredential() {
 
 		//user signup and login and moved to home page --> at beforeEach()
 
@@ -276,7 +276,7 @@ class CloudStorageApplicationTests {
 	 */
 	
 	@Test
-	public void deleteCredentialTest() {
+	public void deleteCredential() {
 		
 		//user signup and login and moved to home page --> at beforeEach()
 
