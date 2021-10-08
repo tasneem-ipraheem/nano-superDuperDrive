@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class NotesPage {
 
@@ -57,6 +55,9 @@ public class NotesPage {
 
 	@FindBy(css = "#title-col")
 	private WebElement notesTableFirstTitleCol;
+	
+	@FindBy(css = "#title-desc")
+	private WebElement notesTableFirstDescriptionCol;
 
 	/******************************************/
 
@@ -161,24 +162,11 @@ public class NotesPage {
 		executer.executeScript("arguments[0].click();", deleteSubmit);
 		executer.executeScript("arguments[0].click();", notesTabField);
 		
-		//		this.driver.findElement(By.id("nav-notes-tab")).click();
-//		this.driver.findElement(By.id("delete-note-button")).click();
-//		this.driver.findElement(By.id("deleteNoteSubmit")).click();
-
-//		this.notesTabField.click();
-
-
+		//this.driver.findElement(By.id("nav-notes-tab")).click();
 //		wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
 //		this.deleteButton.click();
-	
-//		executer.executeScript(clickStr, deleteSubmit);
 
 	}
-
-//	public WebElement getNotesTabField() {
-////		return notesTabField;
-//		return this.driver.findElement(By.id("nav-notes-tab"));
-//	}
 
 	public int getNotesTableSize() {
 		this.driver.findElement(By.id("nav-notes-tab")).click();
@@ -190,10 +178,9 @@ public class NotesPage {
 		return notesTableFirstTitleCol.getAttribute("innerHTML");
 
 	}
-	
-//	public void navToNotesView() {
-//		executer = (JavascriptExecutor) driver;
-//		executer.executeScript("arguments[0].click();", notesTabField);
-////		return this.driver.findElement(By.id("nav-notes-tab"));
-//	}
+
+	public String getNewNoteDescription() {
+		return notesTableFirstDescriptionCol.getAttribute("innerHTML");
+
+	}
 }

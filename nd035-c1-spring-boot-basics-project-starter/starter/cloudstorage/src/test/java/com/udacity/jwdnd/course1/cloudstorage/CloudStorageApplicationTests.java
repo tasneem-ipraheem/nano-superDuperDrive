@@ -49,7 +49,6 @@ class CloudStorageApplicationTests {
 	@BeforeAll
 	public static void beforeAll() {
 		WebDriverManager.chromedriver().setup();
-//		new WebDriverWait(driver, 1000);
 		driver = new ChromeDriver();
 	}
 
@@ -63,10 +62,12 @@ class CloudStorageApplicationTests {
 	public void beforeEach() {
 		baseURL = "http://localhost:" + port;
 		
+		// signUp
 		driver.get(this.baseURL + "/signup");
 		signupPage = new SignupPage(driver);
 		signupPage.signup("rootName", "rootPswrd", this.username, this.password);
 
+		// signin
 		driver.get(this.baseURL + "/login");
 		loginPage = new LoginPage(driver);
 		loginPage.login(this.username, this.password);
@@ -75,190 +76,217 @@ class CloudStorageApplicationTests {
 		
 	}
 
-//	@AfterEach
-//	public void afterEach() {
-//		if (driver != null) {
-//			driver.quit();
-//		}
-//	}
-
-//	public void signupThenLogin() {
-//
-//		driver.get(this.baseURL + "/signup");
-//		signupPage = new SignupPage(driver);
-//		signupPage.signup("rootName", "rootPswrd", this.username, this.password);
-//
-//		driver.get(this.baseURL + "/login");
-//		loginPage = new LoginPage(driver);
-//		loginPage.login(this.username, this.password);
-//		
-//		driver.get(this.baseURL + "/home");
-//
-//
-//	}
 
 	/**************** Login/signup ********************/
 
-//	@Test
-//	public void getSignupPage() {
-//		driver.get(this.baseURL + "/signup");
-//		Assertions.assertEquals("Sign Up", driver.getTitle());
-//	}
-//
-//	@Test
-//	public void getLoginPage() {
-//		driver.get(this.baseURL + "/login");
-//		Assertions.assertEquals("Login", driver.getTitle());
-//	}
-//	@Test
-//	public void testRandomPage() {
-//		driver.get(this.baseURL + "/dummy");
-//		Assertions.assertEquals("Login", driver.getTitle());
-//	}
+	
+	/**
+	 * 
+	 * Write a Selenium test that signs up a new user, 
+	 * logs that user in, 
+	 * verifies that they can access the home page, 
+	 * then logs out 
+	 * and verifies that the home page is no longer accessible.
+	 * 
+	 */
+
+	@Test
+	public void accessHomeAfterLogout() {
+		
+		//user signup and login and moved to home page --> at beforeEach()
+		
+		//logout
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		Assertions.assertEquals("Login", driver.getTitle());
+		
+		//signs up a new user
+		driver.get(this.baseURL + "/signup");
+		signupPage = new SignupPage(driver);
+		signupPage.signup("tasneem", "passwrd", "tasneem", "passwrd");
+
+		//logs that user in
+		driver.get(this.baseURL + "/login");
+		loginPage = new LoginPage(driver);
+		loginPage.login(this.username, this.password);
+		
+		//accessing home
+		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertEquals("Home", driver.getTitle());
+		
+		
+		//logout
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		
+		Assertions.assertEquals("Login", driver.getTitle());
+		
+	}
+	
+	
+	/**
+	 * Write a Selenium test that verifies that the home page is not accessible without logging in.
+	 */
+	
+	@Test
+	public void accessHomeWithoutLogging() {
+		
+		//user signup and login and moved to home page --> at beforeEach()
+		
+		//logout
+		loginPage = new LoginPage(driver);
+		loginPage.logout();
+		Assertions.assertEquals("Login", driver.getTitle());
+
+		//Try accessing home
+		driver.get("http://localhost:" + this.port + "/home");
+		Assertions.assertEquals("Login", driver.getTitle());
+		
+	}
+
+	
+	/*************		Notes  	*******************/
+
 	
 	/*
-	@Test
-	public void testUserSignupLoginHome() {
-		signup();
-		login();
-		driver.get(this.baseURL + "/home");
-		Assertions.assertEquals("Home", driver.getTitle());
-
-	}
-	
-	@Test
-	public void getHomePageNOLogin() {
-		driver.get(this.baseURL + "/home");
-		Assertions.assertEquals("Login", driver.getTitle());
-	}
-
-
-	@Test
-	public void testUserSignupLoginLogOut() {
-		signup();
-		login();
-		driver.get(this.baseURL + "/login?logout");
-		Assertions.assertEquals("You have been logged out", driver.findElement(By.id("logout-msg")).getText());
-		driver.get(this.baseURL + "/login");
-		Assertions.assertEquals("Login", driver.getTitle());
-
-	}
-
-	
-
-*/
-	
-//	/*************		Notes  	*******************/
-
-	
-
+	 * Write a Selenium test that logs in an existing user, 
+	 * creates a note 
+	 * and verifies that the note details are visible in the note list.
+	 * */
 	@Test
 	public void createNoteTest() {
+		
+		//user signup and login and moved to home page --> at beforeEach()
 		
 		notesPage = new NotesPage(driver);
 		notesPage.addNote("Note title", "Note description");
 		
 		driver.get(this.baseURL + "/home");
-//		notesPage.navToNotesView();
 		Assertions.assertEquals("Note title",  notesPage.getNewNoteTitle());
+		Assertions.assertEquals("Note description",  notesPage.getNewNoteDescription());
 
 		driver.get("http://localhost:" + this.port + "/home");
-//		notesPage.navToNotesView();
 		notesPage.deleteNote();
 
 	}	
 	
-	
+	/**
+	 * Write a Selenium test that logs in an existing user with existing notes, 
+	 * clicks the edit note button on an existing note, changes the note data, 
+	 * saves the changes, 
+	 * and verifies that the changes appear in the note list.
+	 */
 
-	
 	@Test
 	public void editNoteTest() {
+		
+		//user signup and login and moved to home page --> at beforeEach()
 		
 		notesPage = new NotesPage(driver);
 		notesPage.addNote("Note title", "Note description");
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		notesPage.navToNotesView();
 		notesPage.editNote("note Title edited", "Edited note description");
 		
-//		notesPage.navToNotesView();
 		Assertions.assertEquals("note Title edited", notesPage.getNewNoteTitle());
-		
-		driver.get("http://localhost:" + this.port + "/home");
-//		notesPage.navToNotesView();
+		Assertions.assertEquals("Edited note description",  notesPage.getNewNoteDescription());
 
+		driver.get("http://localhost:" + this.port + "/home");
 		notesPage.deleteNote();
 
 
 	}
 
+
+	/**
+	 * Write a Selenium test that logs in an existing user with existing notes, 
+	 * clicks the delete note button on an existing note, 
+	 * and verifies that the note no longer appears in the note list.
+	 */
+	
 	@Test
 	public void deleteNoteTest() {
 		
+		//user signup and login and moved to home page --> at beforeEach()
+
 		notesPage = new NotesPage(driver);
 		notesPage.addNote( "Note title", "Note description");
 		
-//		notesPage.navToNotesView();		notesPage.deleteNote();
-		
 		driver.get("http://localhost:" + this.port + "/home");
 		notesPage.deleteNote();
-//		notesPage.navToNotesView();
-		
 		Assertions.assertEquals(0,notesPage.getNotesTableSize());
 
 	}
 	
 	
-
-
+	/***********		Credential		*****************/
 	
+	
+	/**
+	 * Write a Selenium test that logs in an existing user, 
+	 * creates a credential 
+	 * and verifies that the credential details are visible in the credential list.
+	 */
+	
+
 	@Test
 	public void createCredentialTest() {
-		
+
+		//user signup and login and moved to home page --> at beforeEach()
+
 		credentialsPage = new CredentialsPage(driver);
 		credentialsPage.addCredential( "facebook", "rootName", "rootPswrd");
 		
 		driver.get(this.baseURL + "/home");
-//		credentialsPage.navToNotesView();
 		Assertions.assertEquals("facebook",  credentialsPage.getNewCredentialTitle());
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		credentialsPage.deleteCredential();
 	}
+	
+	/**
+	 * Write a Selenium test that logs in an existing user with existing credentials, 
+	 * clicks the edit credential button on an existing credential, 
+	 * changes the credential data, saves the changes, 
+	 * and verifies that the changes appear in the credential list.
+	 */
 
 	@Test
 	public void editcredentialTest() {
 
+		//user signup and login and moved to home page --> at beforeEach()
+
 		credentialsPage = new CredentialsPage(driver);
 		credentialsPage.addCredential( "facebook", "rootName", "rootPswrd");
 	
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		credentialsPage.editCredential("Edited facebook", "Edited username", "Edited password");
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		Assertions.assertEquals("Edited facebook",  credentialsPage.getNewCredentialTitle());
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		credentialsPage.deleteCredential();
 	}
-	
+
+	/**
+	 * Write a Selenium test that logs in an existing user with existing credentials, 
+	 * clicks the delete credential button on an existing credential, 
+	 * and verifies that the credential no longer appears in the credential list.
+	 */
 	
 	@Test
 	public void deleteCredentialTest() {
+		
+		//user signup and login and moved to home page --> at beforeEach()
 
 		credentialsPage = new CredentialsPage(driver);
 		credentialsPage.addCredential( "facebook", "rootName", "rootPswrd");
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		credentialsPage.deleteCredential();
 		
 		driver.get("http://localhost:" + this.port + "/home");
-//		credentialsPage.navToNotesView();
 		Assertions.assertEquals(0, credentialsPage.getCredentialTableSize());
 	}
 	
