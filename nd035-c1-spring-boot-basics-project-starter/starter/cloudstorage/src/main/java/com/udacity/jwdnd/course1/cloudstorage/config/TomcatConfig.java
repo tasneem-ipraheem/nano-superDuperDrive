@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.controller;
+package com.udacity.jwdnd.course1.cloudstorage.config;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
@@ -8,7 +8,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TomcatCustomizer implements
+public class TomcatConfig implements
 WebServerFactoryCustomizer<TomcatServletWebServerFactory> {
 
     @Override

@@ -41,13 +41,6 @@ public class FilesController {// implements HandlerExceptionResolver{
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		
 
-
-		if (request == null ){
-			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "The file exceeds the upload limit 5M !");
-			return "redirect:/home";
-		}
-
 		if (multipartFile.isEmpty()) {
 			redirectAttributes.addFlashAttribute("error", true);
 			redirectAttributes.addFlashAttribute("errorMessage", "Select file to upload !");
