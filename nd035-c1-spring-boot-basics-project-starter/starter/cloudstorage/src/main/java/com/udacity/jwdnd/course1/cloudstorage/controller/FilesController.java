@@ -1,6 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -21,6 +20,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Files;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FilesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import com.udacity.jwdnd.course1.cloudstorage.util.MessegesUtil;
 
 @Controller
 @RequestMapping("/files")
@@ -43,7 +43,7 @@ public class FilesController {// implements HandlerExceptionResolver{
 
 		if (multipartFile.isEmpty()) {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "Select file to upload !");
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.FileMessages.FAIL_NO_SELECTED_FILE);
 			return "redirect:/home";
 		}
 
@@ -54,13 +54,13 @@ public class FilesController {// implements HandlerExceptionResolver{
 			if (filesService.isFilenameAvailable(multipartFile, userId)) {
 
 				redirectAttributes.addFlashAttribute("error", true);
-				redirectAttributes.addFlashAttribute("errorMessage", "File already exist !");
+				redirectAttributes.addFlashAttribute("errorMessage",  MessegesUtil.FileMessages.FAIL_UPLOAD_EXIST_FILE);
 				return "redirect:/home";
 			}
 
 			filesService.createFile(multipartFile, userId);
 			redirectAttributes.addFlashAttribute("success", true);
-			redirectAttributes.addFlashAttribute("successMessage", "File added successfully");
+			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.FileMessages.SUCCESS_UPLOAD);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			redirectAttributes.addFlashAttribute("error", true);
@@ -75,7 +75,7 @@ public class FilesController {// implements HandlerExceptionResolver{
         try {
             filesService.deleteFile(id);
             redirectAttributes.addFlashAttribute("success", true);
-            redirectAttributes.addFlashAttribute("successMessage", "File Deleted successfully");
+            redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.FileMessages.SUCCESS_DELETED);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", true);
             redirectAttributes.addFlashAttribute("errorMessage",  e.getMessage());

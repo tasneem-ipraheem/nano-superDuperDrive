@@ -18,6 +18,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import com.udacity.jwdnd.course1.cloudstorage.util.MessegesUtil;
 
 @Controller
 @RequestMapping("/credentials")
@@ -55,10 +56,10 @@ public class CredentialController {
 
         if (rows > 0) {
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "Credential added successfully");
+            redirectAttributes.addFlashAttribute("successMessage",MessegesUtil.CredentialMessages.SUCCESS_ADD);
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage", "Credential add fail");
+            redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.CredentialMessages.FAIL_ADD_DATABASE);
         }
 
         return "redirect:/home";
@@ -76,10 +77,10 @@ public class CredentialController {
         
         if (rows > 0){
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "Credential updated Successfully");
+            redirectAttributes.addFlashAttribute("successMessage",  MessegesUtil.CredentialMessages.SUCCESS_EDIT);
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage","Credential update Fail");
+            redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.CredentialMessages.FAIL_EDIT_DATABASE);
         }
 
         return "redirect:/home";
@@ -95,10 +96,10 @@ public class CredentialController {
         int rows = credentialService.deleteCredential(credential.getCredentialId());
         if (rows > 0) {
             redirectAttributes.addFlashAttribute("success",true);
-            redirectAttributes.addFlashAttribute("successMessage", "Credential deleted successfully");
+            redirectAttributes.addFlashAttribute("successMessage",MessegesUtil.CredentialMessages.SUCCESS_DELETE);
         } else {
             redirectAttributes.addFlashAttribute("error", true);
-            redirectAttributes.addFlashAttribute("errorMessage","Credential delete Fail");
+            redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.CredentialMessages.FAIL_DELETE_DATABASE);
         }
 
         return "redirect:/home";

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.udacity.jwdnd.course1.cloudstorage.util.MessegesUtil;
+
 //@RestController
 
 @Controller
@@ -22,11 +24,11 @@ public class ErrorrHandlerController implements ErrorController {
 		
 		int range = Integer.parseInt(code);
 		if (range >= 400 && range <500) {
-			model.addAttribute("errorTxt", "The link you followed may be broken, or the page may have been removed");
+			model.addAttribute("errorTxt", MessegesUtil.ErrorControllerMessages.FAIL_INVALID_PAGE);
 
 
 		}else {
-			model.addAttribute("errorTxt", "Server or DataBase issue");
+			model.addAttribute("errorTxt", MessegesUtil.ErrorControllerMessages.FAIL_INTERNAL_ERROR);
 
 		}
 		return "/error";

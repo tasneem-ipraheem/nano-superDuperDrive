@@ -13,6 +13,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import com.udacity.jwdnd.course1.cloudstorage.util.MessegesUtil;
 
 @Controller
 public class NotesController {
@@ -45,14 +46,13 @@ public class NotesController {
 
 		if (rowsAdded > 0) {
 			redirectAttributes.addFlashAttribute("success", true);
-			redirectAttributes.addFlashAttribute("successMessage", "Note added successfully");
+			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.NoteMessages.SUCCESS_ADD);
 		} else if (notes.isDscrExcced()) {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage",
-					"Note can't be saved as description exceed 1000 characters");
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_ADD_EXCEED_DESCRIPTION_LIMIT);
 		}else {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "Add note Database error");
+			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_ADD_DATABASE);
 		}
 
 //		 return "redirect:/home#nav-notes";
@@ -80,14 +80,13 @@ public class NotesController {
 
 		if (rows > 0) {
 			redirectAttributes.addFlashAttribute("success", true);
-			redirectAttributes.addFlashAttribute("successMessage", "Note edited successfully");
+			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.NoteMessages.SUCCESS_EDIT);
 		} else if (notes.isDscrExcced()) {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage",
-					"Note can't be edited as description exceed 1000 characters");
+			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_EDIT_EXCEED_DESCRIPTION_LIMIT);
 		}else {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "Edite note Database error");
+			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_EDIT_DATABASE );
 		}
 
 //		return "redirect:/home#nav-notes-tab";
@@ -106,10 +105,10 @@ public class NotesController {
 //		 
 		if (rows > 0) {
 			redirectAttributes.addFlashAttribute("success", true);
-			redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully");
+			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.NoteMessages.SUCCESS_DELETE);
 		} else {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", "Delete note error");
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_DELETE_DATABASE);
 		}
 
 //		return "redirect:/home#nav-notes-tab";
