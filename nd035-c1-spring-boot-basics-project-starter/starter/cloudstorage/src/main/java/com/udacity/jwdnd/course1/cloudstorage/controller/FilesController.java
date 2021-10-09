@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +24,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 
 @Controller
 @RequestMapping("/files")
-public class FilesController {
+public class FilesController {// implements HandlerExceptionResolver{
 
 	FilesService filesService;
 	UserService userService;
@@ -35,7 +38,15 @@ public class FilesController {
 
 	@PostMapping
 	public String uploadFile(@RequestParam MultipartFile multipartFile, Authentication authentication,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, HttpServletRequest request) {
+		
+
+
+		if (request == null ){
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "The file exceeds the upload limit 5M !");
+			return "redirect:/home";
+		}
 
 		if (multipartFile.isEmpty()) {
 			redirectAttributes.addFlashAttribute("error", true);
@@ -93,5 +104,21 @@ public class FilesController {
                 .body(resource);
 
     }
+
+//	@Override
+//	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+//			Exception ex) {
+//		// TODO Auto-generated method stub
+////		return null;
+//		
+//		 ModelAndView modelAndView = new ModelAndView("file");
+//		    if (ex instanceof MaxUploadSizeExceededException) {
+//		        modelAndView.getModel().put("message", "File size exceeds limit!");
+//		        
+////				redirectAttributes.addFlashAttribute("errorMessage", "Select file to upload !");
+////				return "redirect:/home";
+//		    }
+//		    return modelAndView;
+//	}
 
 }
