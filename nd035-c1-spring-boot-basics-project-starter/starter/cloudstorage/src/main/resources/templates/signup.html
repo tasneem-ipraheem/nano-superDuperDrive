@@ -17,10 +17,10 @@
             <h1 class="display-5">Sign Up</h1>
             <form action="#" method="POST"  th:object="${signUpForm}" th:action="@{'/signup'}" >
 <!--                 <div th:if="${param.success}" class="alert alert-dark"> -->
-                <div id="success-msg" th:if="${signupSuccess}" class="alert alert-dark">
+<!--                 <div id="success-msg" th:if="${signupSuccess}" class="alert alert-dark"> -->
 
-                    You successfully signed up! Please continue to the <a href="/login">login</a> page.
-                </div>
+<!--                     You successfully signed up! Please continue to the <a href="/login">login</a> page. -->
+<!--                 </div> -->
 <!--                 <div th:if="${param.fail}" class="alert alert-danger"> -->
                 <div id="error-msg" th:if="${signupError}" class="alert alert-danger">
 
