@@ -1,5 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import java.sql.SQLException;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,76 +27,111 @@ public class NotesController {
 	}
 
 	@PostMapping("/notes")
-	public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model,RedirectAttributes redirectAttributes) {
+	public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		User user = userService.getUser(authentication.getName());
 		Integer userId = user.getUserId();
 		notes.setUserId(userId);
+		int rowsAdded = 0;
 
 //		System.out.println("*****	NotesController : createNote  ******");
 //		System.out.println("note = " + notes.getNoteTitle() + " : " + notes.getNoteDescription() +" , user : "+notes.getUserId());
 //		
-		 int rowsAdded = this.notesService.addNote(notes); 
-		 
-		 if (rowsAdded > 0){
-	            redirectAttributes.addFlashAttribute("success",true);
-	            redirectAttributes.addFlashAttribute("successMessage", "Note added successfully");
-	        } else {
-	            redirectAttributes.addFlashAttribute("error", true);
-	            redirectAttributes.addFlashAttribute("errorMessage","add note error");
-	        }
+
+		if (notes.getNoteDescription().length() > 1000) {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage",
+					"Note can't be saved as description exceed 1000 characters");
+			return "redirect:/home";
+		}
+
+		try {
+
+			rowsAdded = this.notesService.addNote(notes);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "Note can't be saved due to database fail");
+			return "redirect:/home";
+		}
+
+		if (rowsAdded > 0) {
+			redirectAttributes.addFlashAttribute("success", true);
+			redirectAttributes.addFlashAttribute("successMessage", "Note added successfully");
+		} else {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "add note error");
+		}
 
 //		 return "redirect:/home#nav-notes";
 		return "redirect:/home";
 
 	}
-	
 
 	@PutMapping("/notes")
-	public String editNote(Authentication authentication,  @ModelAttribute Notes notes, Model model,RedirectAttributes redirectAttributes) {
+	public String editNote(Authentication authentication, @ModelAttribute Notes notes, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		User user = userService.getUser(authentication.getName());
 		Integer userId = user.getUserId();
 		notes.setUserId(userId);
-
+		int rows = 0;
 //		System.out.println("*****	NotesController : editNote  ******");
 //		System.out.println("notes = " + notes.getNoteTitle() + " : " + notes.getNoteDescription() +" , user : "+notes.getUserId());
-		
-		 int rows = this.notesService.editNote(notes); 
+
+		if (notes.getNoteDescription().length() > 1000) {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage",
+					"Note can't be saved as description exceed 1000 characters");
+			return "redirect:/home";
+		}
+
+		try {
+			rows = this.notesService.editNote(notes);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "Note can't be saved due to database fail");
+			return "redirect:/home";
+		}
 //		 
-		 if (rows > 0){
-	            redirectAttributes.addFlashAttribute("success",true);
-	            redirectAttributes.addFlashAttribute("successMessage", "Note edited successfully");
-	        } else {
-	            redirectAttributes.addFlashAttribute("error", true);
-	            redirectAttributes.addFlashAttribute("errorMessage","Edite note error");
-	        }
+		if (rows > 0) {
+			redirectAttributes.addFlashAttribute("success", true);
+			redirectAttributes.addFlashAttribute("successMessage", "Note edited successfully");
+		} else {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "Edite note error");
+		}
 
 //		return "redirect:/home#nav-notes-tab";
-		 
+
 		return "redirect:/home";
 
 	}
-	
 
 	@DeleteMapping("/notes")
-	public String deleteNote( @ModelAttribute Notes notes, RedirectAttributes redirectAttributes) {
+	public String deleteNote(@ModelAttribute Notes notes, RedirectAttributes redirectAttributes) {
 
 //		System.out.println("*****	NotesController : deleteNote  ******");
 //		System.out.println("noteId = " + notes.getNoteId() );
-		
-		 int rows = this.notesService.deleteNote( notes.getNoteId()); 
+
+		int rows = this.notesService.deleteNote(notes.getNoteId());
 //		 
-		 if (rows > 0){
-	            redirectAttributes.addFlashAttribute("success",true);
-	            redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully");
-	        } else {
-	            redirectAttributes.addFlashAttribute("error", true);
-	            redirectAttributes.addFlashAttribute("errorMessage","Delete note error");
-	        }
+		if (rows > 0) {
+			redirectAttributes.addFlashAttribute("success", true);
+			redirectAttributes.addFlashAttribute("successMessage", "Note deleted successfully");
+		} else {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", "Delete note error");
+		}
 
 //		return "redirect:/home#nav-notes-tab";
-		 
+
 		return "redirect:/home";
 
 	}

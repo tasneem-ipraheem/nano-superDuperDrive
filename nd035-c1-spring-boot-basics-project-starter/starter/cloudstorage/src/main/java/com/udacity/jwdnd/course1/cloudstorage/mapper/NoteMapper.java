@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -34,7 +35,7 @@ public interface NoteMapper {
 //	private int userId;
 //	
     @Insert("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES (#{noteTitle}, #{noteDescription}, #{userId})")
-    public int insertNote(Notes note);
+    public int insertNote(Notes note) throws Exception;
 
     @Delete("DELETE FROM NOTES WHERE noteid = #{noteId}")
     public int deleteNote(int noteid);

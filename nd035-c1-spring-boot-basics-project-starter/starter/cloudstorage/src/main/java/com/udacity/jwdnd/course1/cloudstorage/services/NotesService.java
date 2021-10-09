@@ -1,8 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import java.sql.SQLException;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class NotesService {
 //    public void postConstruct() {
 //    }
 
-	public int addNote(Notes note) {
+	public int addNote(Notes note) throws Exception  {
 		return noteMapper.insertNote(note);
 	}
 	
