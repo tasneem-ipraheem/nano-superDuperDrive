@@ -14,22 +14,25 @@
 <body class="p-3 mb-2 bg-light text-black">
 
 	<div class="container justify-content-center w-25 p-3"
-		style="background-color: #eeeeee; ">
+		style="background-color: #eeeeee;">
 
 		<div id="error-msg" class="alert alert-danger">
-					<h1 style=font-size:150px id="error-code" class="display-5" th:text="${errorCode}"></h1>
+			<h1 style="font-size: 150px" id="error-code" class="display-5"
+				th:text="${errorCode}"></h1>
+			<h5>Something went wrong!</h5>
 
-	</div>
-	
-			<div id="error-msg" class="alert alert-dark">
-	
-			<h5 >Something went wrong!</h5>
+		</div>
 
-			<p>The link you followed may be broken, or the page may have been
-				removed.</p>
-	
+		<div id="error-msg" class="alert alert-dark">
 
-	</div>
+
+			<h6 th:text="${errorTxt}"></h6>
+
+			<!-- 			<p>The link you followed may be broken, or the page may have been -->
+			<!-- 				removed.</p> -->
+
+
+		</div>
 
 
 		<div class="alert " style="margin-top: 0.5em;">

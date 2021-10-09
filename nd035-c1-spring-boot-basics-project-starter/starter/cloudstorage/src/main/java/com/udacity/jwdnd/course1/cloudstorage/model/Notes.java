@@ -7,6 +7,15 @@ public class Notes {
 	private String noteDescription;//noteDescription
 	private Integer userId;
 	
+	boolean isDscrExcced;
+	
+	
+	public boolean isDscrExcced() {
+		return isDscrExcced;
+	}
+	public void setDscrExcced(boolean isDscrExcced) {
+		this.isDscrExcced = isDscrExcced;
+	}
 	public Integer getNoteId() {
 		return noteId;
 	}
