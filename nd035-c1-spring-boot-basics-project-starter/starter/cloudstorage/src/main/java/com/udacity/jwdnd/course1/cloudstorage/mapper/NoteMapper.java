@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.Notes;
+import com.udacity.jwdnd.course1.cloudstorage.model.User;
 
 
 @Mapper
@@ -41,4 +42,7 @@ public interface NoteMapper {
 
     @Update("UPDATE NOTES SET notetitle = #{noteTitle}, notedescription = #{noteDescription} WHERE noteid = #{noteId}")
     public int updateNote(Notes note) throws Exception;
+    
+    @Select("SELECT * FROM NOTES WHERE notetitle = #{noteTitle} AND notedescription = #{noteDescription}")
+    Notes getOldNote(Notes note);
 }

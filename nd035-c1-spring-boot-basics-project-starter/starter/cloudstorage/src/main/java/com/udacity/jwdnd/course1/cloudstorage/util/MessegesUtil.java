@@ -20,6 +20,8 @@ public class MessegesUtil {
 		public static final String FAIL_ADD_DATABASE = "Add note Database error";
 		public static final String FAIL_EDIT_DATABASE = "Edite note Database error";
 		public static final String FAIL_DELETE_DATABASE = "Delete note error";
+		public static final String FAIL_EDIT_NOTE_ALREADY_EXIST = "Edit Fail, Note Already Exist!";
+		public static final String FAIL_ADD_NOTE_ALREADY_EXIST = "Add Fail, Note Already Exist!";
 
 		public static final String SUCCESS_ADD = "Note added successfully";
 		public static final String SUCCESS_EDIT = "Note edited successfully";

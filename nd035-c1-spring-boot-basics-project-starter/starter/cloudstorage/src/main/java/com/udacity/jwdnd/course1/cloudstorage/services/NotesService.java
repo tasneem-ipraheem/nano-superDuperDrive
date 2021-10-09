@@ -20,6 +20,11 @@ public class NotesService {
 //    public void postConstruct() {
 //    }
 
+	public Notes getOldNote(Notes note) {
+		return noteMapper.getOldNote(note);
+
+	}
+
 	public int addNote(Notes note) {
 
 		int rows = 0;

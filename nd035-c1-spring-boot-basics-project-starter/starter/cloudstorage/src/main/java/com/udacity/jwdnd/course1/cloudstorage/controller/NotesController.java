@@ -29,6 +29,14 @@ public class NotesController {
 	public String createNote(Authentication authentication, @ModelAttribute Notes notes, Model model,
 			RedirectAttributes redirectAttributes) {
 
+		Notes old = this.notesService.getOldNote(notes);
+
+		if (old != null) {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_ADD_NOTE_ALREADY_EXIST);
+			return "redirect:/home";
+		}
+
 		User user = userService.getUser(authentication.getName());
 		Integer userId = user.getUserId();
 		notes.setUserId(userId);
@@ -43,16 +51,16 @@ public class NotesController {
 
 		rowsAdded = this.notesService.addNote(notes);
 
-
 		if (rowsAdded > 0) {
 			redirectAttributes.addFlashAttribute("success", true);
 			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.NoteMessages.SUCCESS_ADD);
 		} else if (notes.isDscrExcced()) {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_ADD_EXCEED_DESCRIPTION_LIMIT);
-		}else {
+			redirectAttributes.addFlashAttribute("errorMessage",
+					MessegesUtil.NoteMessages.FAIL_ADD_EXCEED_DESCRIPTION_LIMIT);
+		} else {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_ADD_DATABASE);
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_ADD_DATABASE);
 		}
 
 //		 return "redirect:/home#nav-notes";
@@ -64,6 +72,14 @@ public class NotesController {
 	public String editNote(Authentication authentication, @ModelAttribute Notes notes, Model model,
 			RedirectAttributes redirectAttributes) {
 
+		Notes old = this.notesService.getOldNote(notes);
+
+		if (old != null) {
+			redirectAttributes.addFlashAttribute("error", true);
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_EDIT_NOTE_ALREADY_EXIST);
+			return "redirect:/home";
+		}
+		
 		User user = userService.getUser(authentication.getName());
 		Integer userId = user.getUserId();
 		notes.setUserId(userId);
@@ -83,10 +99,11 @@ public class NotesController {
 			redirectAttributes.addFlashAttribute("successMessage", MessegesUtil.NoteMessages.SUCCESS_EDIT);
 		} else if (notes.isDscrExcced()) {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_EDIT_EXCEED_DESCRIPTION_LIMIT);
-		}else {
+			redirectAttributes.addFlashAttribute("errorMessage",
+					MessegesUtil.NoteMessages.FAIL_EDIT_EXCEED_DESCRIPTION_LIMIT);
+		} else {
 			redirectAttributes.addFlashAttribute("error", true);
-			redirectAttributes.addFlashAttribute("errorMessage",MessegesUtil.NoteMessages.FAIL_EDIT_DATABASE );
+			redirectAttributes.addFlashAttribute("errorMessage", MessegesUtil.NoteMessages.FAIL_EDIT_DATABASE);
 		}
 
 //		return "redirect:/home#nav-notes-tab";
